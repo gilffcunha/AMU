@@ -1,0 +1,11 @@
+https://www.androidhive.info/2017/12/android-user-activity-recognition-still-walking-running-driving-etc/
+
+https://www.androidhive.info/2012/07/android-gps-location-manager-tutorial/
+
+https://developers.google.com/location-context/fused-location-provider/
+
+https://developers.google.com/android/reference/com/google/android/gms/location/ActivityRecognitionClient
+
+https://github.com/ravi8x?tab=repositories
+
+http://download.androidhive.info/
