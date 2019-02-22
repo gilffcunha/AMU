@@ -1,5 +1,7 @@
 package Server;
 
+import java.util.HashMap;
+
 public class Utilizador
 {
     private String nome;
@@ -56,5 +58,10 @@ public class Utilizador
         this.experiencia = experiencia;
     }
 
-    
+    public void addExperiencia(String protocolo, String versao_Android, String marca, String modelo, HashMap<Integer, Amostra> amostras)
+    {
+        Experiencia e = new Experiencia(protocolo, versao_Android, marca, modelo, amostras);
+
+        this.setExperiencia(e.clone());
+    }
 }

@@ -15,7 +15,16 @@ public class Experiencia
         this.versao_Android = versao_Android;
         this.marca = marca;
         this.modelo = modelo;
-        this.amostras = amostras;
+        this.amostras = this.validaAmostras(amostras);
+    }
+
+    public Experiencia(Experiencia e)
+    {
+        this.protocolo = e.getProtocolo();
+        this.amostras = e.getAmostras();
+        this.marca = e.getMarca();
+        this.modelo = e.getModelo();
+        this.versao_Android = e.getVersao_Android();
     }
 
     public String getProtocolo() {
@@ -58,5 +67,23 @@ public class Experiencia
         this.amostras = amostras;
     }
 
+    public HashMap<Integer, Amostra> validaAmostras(HashMap<Integer,Amostra> amostras)
+    {
+        HashMap<Integer,Amostra> amostrasValidas = new HashMap<Integer,Amostra>();
 
+        for(Amostra a : amostras.values())
+        {
+            if(DefaultSettings.valida(a))
+            {
+                amostrasValidas.put(a.getId(), a.clone());
+            }
+        }
+
+        return amostrasValidas;
+    }
+
+    public Experiencia clone()
+    {
+        return new Experiencia(this);
+    }
 }
