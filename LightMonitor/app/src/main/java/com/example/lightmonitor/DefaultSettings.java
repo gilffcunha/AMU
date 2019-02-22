@@ -1,5 +1,8 @@
 package com.example.lightmonitor;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import java.time.LocalTime;
 
 public class DefaultSettings
@@ -8,6 +11,7 @@ public class DefaultSettings
     private static LocalTime horaMaxima;
     // Limitamos também localização??
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public DefaultSettings()
     {
         this.horaMinima = LocalTime.of(20, 00);
@@ -19,6 +23,7 @@ public class DefaultSettings
         this.horaMaxima = horaMaxima;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static boolean valida(Amostra a)
     {
         boolean ret = false;
