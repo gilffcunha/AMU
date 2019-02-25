@@ -95,4 +95,11 @@ public class Experiencia
     {
         return new Experiencia(this);
     }
+
+    public String toString() {return "Protocolo: "+protocolo+" "+"| Versao Android: "+versao_Android+" "+"| Marca: "+marca+" "+"| Modelo: "+modelo+"\n";}
+
+
+    public void addAmostra(Amostra a){
+        amostras.put(a.getId(),a);
+    }
 }

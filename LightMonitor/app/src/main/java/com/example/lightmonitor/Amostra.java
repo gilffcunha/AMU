@@ -5,12 +5,12 @@ import java.time.LocalDateTime;
 public class Amostra
 {
     private int id;
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
     private double luminusidade;
     private LocalDateTime timestamp;
 
-    public Amostra(int id, String latitude, String longitude, double luminusidade, LocalDateTime timestamp) {
+    public Amostra(int id, double latitude, double longitude, double luminusidade, LocalDateTime timestamp) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -27,24 +27,33 @@ public class Amostra
         this.timestamp = a.getTimestamp();
     }
 
+    public Amostra()
+    {
+        this.id = 0;
+        this.latitude = 0;
+        this.longitude = 0;
+        this.luminusidade = 0;
+        this.timestamp = LocalDateTime.now();
+    }
+
     public int getId()
     {
         return id;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -68,4 +77,6 @@ public class Amostra
     {
         return new Amostra(this);
     }
+
+    public  String toString(){return "Id: "+id+"| Latitude: "+latitude+" | Longitude: "+longitude+"| Luminosidade: "+luminusidade+" ! Timestamp: "+timestamp;}
 }

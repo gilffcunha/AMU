@@ -3,11 +3,17 @@ package com.example.lightmonitor;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Service;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
@@ -52,7 +58,15 @@ import butterknife.OnClick;
  * Reference: https://github.com/googlesamples/android-play-location/tree/master/LocationUpdates
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
+
+
+    private Experiencia exp;
+    private Amostra sample;
+
+    private SensorManager sensorManager;
+    private Sensor sensor;
+    private  SensorEvent event;
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -104,6 +118,11 @@ public class MainActivity extends AppCompatActivity {
 
         // restore the values from saved instance state
         restoreValuesFromBundle(savedInstanceState);
+
+        // initialize light sensor
+        sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
     }
 
     private void init() {
@@ -132,6 +151,17 @@ public class MainActivity extends AppCompatActivity {
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
         builder.addLocationRequest(mLocationRequest);
         mLocationSettingsRequest = builder.build();
+
+        // EXPERIMENT
+        exp = new Experiencia();
+
+        exp.setProtocolo("Iluminacao de passadeira");
+        exp.setVersao_Android(Build.VERSION.RELEASE);
+        exp.setMarca(Build.BRAND);
+        exp.setModelo(Build.MODEL);
+
+        System.out.println("EXPERIENCIA: "+ exp.toString());
+
     }
 
     /**
@@ -161,6 +191,8 @@ public class MainActivity extends AppCompatActivity {
      * and toggling the buttons
      */
     private void updateLocationUI() {
+
+
         if (mCurrentLocation != null) {
             txtLocationResult.setText(
                     "Lat: " + mCurrentLocation.getLatitude() + ", " +
@@ -173,6 +205,25 @@ public class MainActivity extends AppCompatActivity {
 
             // location last updated time
             txtUpdatedOn.setText("Last updated on: " + mLastUpdateTime);
+
+
+            //SAMPLE
+            sample = new Amostra();
+
+            // Coord
+
+            System.out.println("INICIO");
+
+            sample.setLatitude(mCurrentLocation.getLatitude());
+            sample.setLongitude(mCurrentLocation.getLongitude());
+
+            // Light
+            if(event.sensor.getType() == Sensor.TYPE_LIGHT)
+                sample.setLuminusidade(event.values[0]);
+
+            exp.addAmostra(sample);
+
+            System.out.println("Amostra: "+ sample.toString());
         }
 
         toggleButtons();
@@ -211,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                         Log.i(TAG, "All location settings are satisfied.");
 
-                        Toast.makeText(getApplicationContext(), "Started location updates!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "A experiência começou!", Toast.LENGTH_SHORT).show();
 
                         //noinspection MissingPermission
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest,
@@ -341,6 +392,8 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+
         // Resuming location updates depending on button state and
         // allowed permissions
         if (mRequestingLocationUpdates && checkPermissions()) {
@@ -361,9 +414,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
+        sensorManager.unregisterListener(this);
+
         if (mRequestingLocationUpdates) {
             // pausing location updates
             stopLocationUpdates();
         }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event1) {
+        event = event1;
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }
