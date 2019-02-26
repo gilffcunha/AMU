@@ -2,37 +2,37 @@ package com.example.lightmonitor;
 
 import java.time.LocalDateTime;
 
-public class Amostra
+public class Sample
 {
     private int id;
     private double latitude;
     private double longitude;
-    private double luminusidade;
+    private double luminosity;
     private LocalDateTime timestamp;
 
-    public Amostra(int id, double latitude, double longitude, double luminusidade, LocalDateTime timestamp) {
+    public Sample(int id, double latitude, double longitude, double luminusidade, LocalDateTime timestamp) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.luminusidade = luminusidade;
+        this.luminosity = luminusidade;
         this.timestamp = timestamp;
     }
 
-    public Amostra(Amostra a)
+    public Sample(Sample a)
     {
         this.id = a.getId();
         this.latitude = a.getLatitude();
         this.longitude = a.getLongitude();
-        this.luminusidade = a.getLuminusidade();
+        this.luminosity = a.getLuminusity();
         this.timestamp = a.getTimestamp();
     }
 
-    public Amostra()
+    public Sample()
     {
         this.id = 0;
         this.latitude = 0;
         this.longitude = 0;
-        this.luminusidade = 0;
+        this.luminosity = 0;
         this.timestamp = LocalDateTime.now();
     }
 
@@ -57,12 +57,12 @@ public class Amostra
         this.longitude = longitude;
     }
 
-    public double getLuminusidade() {
-        return luminusidade;
+    public double getLuminusity() {
+        return luminosity;
     }
 
-    public void setLuminusidade(double luminusidade) {
-        this.luminusidade = luminusidade;
+    public void setLuminusity(double luminusidade) {
+        this.luminosity = luminusidade;
     }
 
     public LocalDateTime getTimestamp() {
@@ -73,10 +73,10 @@ public class Amostra
         this.timestamp = timestamp;
     }
 
-    public Amostra clone()
+    public Sample clone()
     {
-        return new Amostra(this);
+        return new Sample(this);
     }
 
-    public  String toString(){return "Id: "+id+"| Latitude: "+latitude+" | Longitude: "+longitude+"| Luminosidade: "+luminusidade+" ! Timestamp: "+timestamp;}
+    public  String toString(){return "Id: "+id+"| Latitude: "+latitude+" | Longitude: "+longitude+"| Luminosidade: "+luminosity+" ! Timestamp: "+timestamp;}
 }

@@ -1,32 +1,29 @@
 package com.example.lightmonitor;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-
 import java.time.LocalTime;
 
 public class DefaultSettings
 {
-    private static LocalTime horaMinima;
-    private static LocalTime horaMaxima;
+    private static LocalTime minHour;
+    private static LocalTime maxHour;
     // Limitamos também localização??
 
     public DefaultSettings()
     {
-        this.horaMinima = LocalTime.of(20, 00);
-        this.horaMaxima = LocalTime.of(04,0);
+        this.minHour = LocalTime.of(20, 00);
+        this.maxHour = LocalTime.of(04,0);
     }
 
-    public DefaultSettings(LocalTime horaMinima, LocalTime horaMaxima) {
-        this.horaMinima = horaMinima;
-        this.horaMaxima = horaMaxima;
+    public DefaultSettings(LocalTime minHour, LocalTime maxHour) {
+        this.minHour = minHour;
+        this.maxHour = maxHour;
     }
 
-    public static boolean valida(Amostra a)
+    public static boolean validate(Sample a)
     {
         boolean ret = false;
 
-        if(a.getTimestamp().toLocalTime().isAfter(horaMinima) && a.getTimestamp().toLocalTime().isBefore(horaMaxima))
+        if(a.getTimestamp().toLocalTime().isAfter(minHour) && a.getTimestamp().toLocalTime().isBefore(maxHour))
         {
             ret = true;
         }

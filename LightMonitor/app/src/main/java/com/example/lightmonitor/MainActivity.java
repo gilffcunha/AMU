@@ -61,8 +61,8 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
 
-    private Experiencia exp;
-    private Amostra sample;
+    private Experiment exp;
+    private Sample sample;
 
     private SensorManager sensorManager;
     private Sensor sensor;
@@ -153,12 +153,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mLocationSettingsRequest = builder.build();
 
         // EXPERIMENT
-        exp = new Experiencia();
+        exp = new Experiment();
 
-        exp.setProtocolo("Iluminacao de passadeira");
-        exp.setVersao_Android(Build.VERSION.RELEASE);
-        exp.setMarca(Build.BRAND);
-        exp.setModelo(Build.MODEL);
+        exp.setProtocol("Iluminacao de passadeira");
+        exp.setAndroidVersion(Build.VERSION.RELEASE);
+        exp.setBrand(Build.BRAND);
+        exp.setModel(Build.MODEL);
 
         System.out.println("EXPERIENCIA: "+ exp.toString());
 
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
             //SAMPLE
-            sample = new Amostra();
+            sample = new Sample();
 
             // Coord
 
@@ -219,11 +219,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             // Light
             if(event.sensor.getType() == Sensor.TYPE_LIGHT)
-                sample.setLuminusidade(event.values[0]);
+                sample.setLuminusity(event.values[0]);
 
-            exp.addAmostra(sample);
+            exp.addSample(sample);
 
-            System.out.println("Amostra: "+ sample.toString());
+            System.out.println("Sample: "+ sample.toString());
         }
 
         toggleButtons();
