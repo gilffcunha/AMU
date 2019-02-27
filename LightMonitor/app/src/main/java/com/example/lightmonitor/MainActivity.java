@@ -61,7 +61,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
 
-    private Experiment exp;
+    private Experiment experiment;
     private Sample sample;
 
     private SensorManager sensorManager;
@@ -153,14 +153,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mLocationSettingsRequest = builder.build();
 
         // EXPERIMENT
-        exp = new Experiment();
+        experiment = new Experiment();
 
-        exp.setProtocol("Iluminacao de passadeira");
-        exp.setAndroidVersion(Build.VERSION.RELEASE);
-        exp.setBrand(Build.BRAND);
-        exp.setModel(Build.MODEL);
+        experiment.setProtocol("Level of luminosity on a crosswalk");
+        experiment.setAndroidVersion(Build.VERSION.RELEASE);
+        experiment.setBrand(Build.BRAND);
+        experiment.setModel(Build.MODEL);
 
-        System.out.println("EXPERIENCIA: "+ exp.toString());
+        System.out.println("EXPERIMENT: "+ experiment.toString());
 
     }
 
@@ -207,21 +207,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             txtUpdatedOn.setText("Last updated on: " + mLastUpdateTime);
 
 
-            //SAMPLE
+            // SAMPLE
             sample = new Sample();
 
-            // Coord
+            // Coordinates
 
-            System.out.println("INICIO");
+            System.out.println("INFO:");
 
             sample.setLatitude(mCurrentLocation.getLatitude());
             sample.setLongitude(mCurrentLocation.getLongitude());
 
-            // Light
+            // Light - level of luminosity
             if(event.sensor.getType() == Sensor.TYPE_LIGHT)
                 sample.setLuminusity(event.values[0]);
 
-            exp.addSample(sample);
+            experiment.addSample(sample);
 
             System.out.println("Sample: "+ sample.toString());
         }

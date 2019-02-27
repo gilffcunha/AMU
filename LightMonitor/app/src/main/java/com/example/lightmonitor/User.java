@@ -67,9 +67,9 @@ public class User
             this.experiment = experiment;
         }
 
-     public void addExperiment(String protocolo, String versao_Android, String marca, String modelo, HashMap<Integer, Sample> amostras)
+     public void addExperiment(String protocol, String androidVersion, String brand, String model, HashMap<Integer, Sample> samples)
      {
-         Experiment e = new Experiment(protocolo, versao_Android, marca, modelo, amostras);
+         Experiment e = new Experiment(protocol, androidVersion, brand, model, samples);
 
          this.setExperiment(e.clone());
      }

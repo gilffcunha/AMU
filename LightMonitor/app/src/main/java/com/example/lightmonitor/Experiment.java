@@ -82,7 +82,7 @@ public class Experiment
 
         for(Sample a : samples.values())
         {
-            if(DefaultSettings.valida(a))
+            if(DefaultSettings.validate(a))
             {
                 validSamples.put(a.getId(), a.clone());
             }
@@ -96,7 +96,7 @@ public class Experiment
         return new Experiment(this);
     }
 
-    public String toString() {return "Protocolo: "+ protocol +" "+"| Versao Android: "+ androidVersion +" "+"| Marca: "+ brand +" "+"| Modelo: "+ model +"\n";}
+    public String toString() {return "Protocol: "+ protocol +" "+"| Android version: "+ androidVersion +" "+"| Brand: "+ brand +" "+"| Model: "+ model +"\n";}
 
 
     public void addSample(Sample a){

@@ -10,11 +10,11 @@ public class Sample
     private double luminosity;
     private LocalDateTime timestamp;
 
-    public Sample(int id, double latitude, double longitude, double luminusidade, LocalDateTime timestamp) {
+    public Sample(int id, double latitude, double longitude, double luminosity, LocalDateTime timestamp) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.luminosity = luminusidade;
+        this.luminosity = luminosity;
         this.timestamp = timestamp;
     }
 
@@ -61,8 +61,8 @@ public class Sample
         return luminosity;
     }
 
-    public void setLuminusity(double luminusidade) {
-        this.luminosity = luminusidade;
+    public void setLuminusity(double luminosity) {
+        this.luminosity = luminosity;
     }
 
     public LocalDateTime getTimestamp() {
@@ -78,5 +78,5 @@ public class Sample
         return new Sample(this);
     }
 
-    public  String toString(){return "Id: "+id+"| Latitude: "+latitude+" | Longitude: "+longitude+"| Luminosidade: "+luminosity+" ! Timestamp: "+timestamp;}
+    public  String toString(){return "Id: "+id+"| Latitude: "+latitude+" | Longitude: "+longitude+"| Luminosity: "+luminosity+" ! Timestamp: "+timestamp;}
 }
