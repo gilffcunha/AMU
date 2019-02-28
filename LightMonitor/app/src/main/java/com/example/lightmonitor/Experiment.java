@@ -4,13 +4,13 @@ import java.util.HashMap;
 
 public class Experiment
 {
-    private String protocol;
+    private Protocol protocol;
     private String androidVersion;
     private String brand;
     private String model;
     private HashMap<Integer, Sample> samples;
 
-    public Experiment(String protocol, String androidVersion, String brand, String model, HashMap<Integer, Sample> samples) {
+    public Experiment(Protocol protocol, String androidVersion, String brand, String model, HashMap<Integer, Sample> samples) {
         this.protocol = protocol;
         this.androidVersion = androidVersion;
         this.brand = brand;
@@ -29,18 +29,18 @@ public class Experiment
 
     public Experiment()
     {
-        this.protocol = "";
+        this.protocol = new Protocol();
         this.androidVersion = "";
         this.brand = "";
         this.model = "";
         this.samples = new HashMap<>();
     }
 
-    public String getProtocol() {
+    public Protocol getProtocol() {
         return protocol;
     }
 
-    public void setProtocol(String protocol) {
+    public void setProtocol(Protocol protocol) {
         this.protocol = protocol;
     }
 
