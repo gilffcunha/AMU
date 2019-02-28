@@ -28,20 +28,37 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `mydb`.`Protocol`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`Protocol` (
+  `ID` INT NOT NULL,
+  `Type` VARCHAR(45) NOT NULL,
+  `Description` LONGTEXT NOT NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `mydb`.`Experiment`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Experiment` (
   `ID` INT NOT NULL AUTO_INCREMENT,
-  `Protocol` VARCHAR(45) NOT NULL,
   `AndroidVersion` VARCHAR(45) NOT NULL,
   `Brand` VARCHAR(45) NOT NULL,
   `Model` VARCHAR(45) NOT NULL,
   `User_ID` INT NOT NULL,
+  `Protocol_ID` INT NOT NULL,
   PRIMARY KEY (`ID`),
   INDEX `fk_Experiencia_Utilizador1_idx` (`User_ID` ASC) VISIBLE,
+  INDEX `fk_Experiment_Protocol1_idx` (`Protocol_ID` ASC) VISIBLE,
   CONSTRAINT `fk_Experiencia_Utilizador1`
     FOREIGN KEY (`User_ID`)
     REFERENCES `mydb`.`User` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Experiment_Protocol1`
+    FOREIGN KEY (`Protocol_ID`)
+    REFERENCES `mydb`.`Protocol` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
