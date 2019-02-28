@@ -22,7 +22,7 @@ public class ConnectionDB
     {
         this.url = "jdbc:mysql://localhost:3306/mydb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
         this.username = "root";
-        this.password = "26121996";
+        this.password = "pass"; // metam a vossa password
     }
 
     public boolean isConnected()
