@@ -1,7 +1,6 @@
 <resources>
-    <string name="app_name">LightMonitor</string>
+    <string name="app_name">Lux App</string>
     <string name="action_settings">Settings</string>
-    <string name="start_updates">START LOCATION UPDATES</string>
-    <string name="stop_updates">STOP LOCATION UPDATES</string>
-    <string name="get_last_location">GET LAST LOCATION</string>
+    <string name="start_updates">Press to start</string>
+    <string name="stop_updates">Press to stop</string>
 </resources>

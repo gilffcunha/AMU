@@ -4,13 +4,16 @@ import java.util.HashMap;
 
 public class Experiment
 {
+    private int id;
     private Protocol protocol;
     private String androidVersion;
     private String brand;
     private String model;
     private HashMap<Integer, Sample> samples;
 
-    public Experiment(Protocol protocol, String androidVersion, String brand, String model, HashMap<Integer, Sample> samples) {
+    public Experiment(int id, Protocol protocol, String androidVersion, String brand, String model, HashMap<Integer, Sample> samples) {
+
+        this.id = id;
         this.protocol = protocol;
         this.androidVersion = androidVersion;
         this.brand = brand;
@@ -20,6 +23,7 @@ public class Experiment
 
     public Experiment(Experiment e)
     {
+        this.id = e.getId();
         this.protocol = e.getProtocol();
         this.samples = e.getSamples();
         this.brand = e.getBrand();
@@ -29,12 +33,20 @@ public class Experiment
 
     public Experiment()
     {
+        this.id = 0;
         this.protocol = new Protocol();
         this.androidVersion = "";
         this.brand = "";
         this.model = "";
         this.samples = new HashMap<>();
     }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id) {this.id = id;}
 
     public Protocol getProtocol() {
         return protocol;
@@ -96,7 +108,7 @@ public class Experiment
         return new Experiment(this);
     }
 
-    public String toString() {return "Protocol: "+ protocol +" "+"| Android version: "+ androidVersion +" "+"| Brand: "+ brand +" "+"| Model: "+ model +"\n";}
+    public String toString() {return "Experiment - Protocol:" + protocol + "Android version: "+ androidVersion +" "+"| Brand: "+ brand +" "+"| Model: "+ model +"\n";}
 
 
     public void addSample(Sample a){

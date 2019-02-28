@@ -152,10 +152,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         builder.addLocationRequest(mLocationRequest);
         mLocationSettingsRequest = builder.build();
 
+        // PROTOCOL
+        Protocol prot = new Protocol();
+        prot.setType("Luminosidade de uma passadeira");
+        prot.setDescription("1- PASSO 1\n2- PASSO 2\n3- PASSO 3");
+
         // EXPERIMENT
         experiment = new Experiment();
 
-        experiment.setProtocol("Level of luminosity on a crosswalk");
+        experiment.setProtocol(prot);
         experiment.setAndroidVersion(Build.VERSION.RELEASE);
         experiment.setBrand(Build.BRAND);
         experiment.setModel(Build.MODEL);
@@ -348,7 +353,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 });
     }
 
-    @OnClick(R.id.btn_get_last_location)
+ /*   @OnClick(R.id.btn_get_last_location)
     public void showLastKnownLocation() {
         if (mCurrentLocation != null) {
             Toast.makeText(getApplicationContext(), "Lat: " + mCurrentLocation.getLatitude()
@@ -356,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         } else {
             Toast.makeText(getApplicationContext(), "Last known location is not available!", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

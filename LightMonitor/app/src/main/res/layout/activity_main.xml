@@ -8,6 +8,14 @@
     android:orientation="vertical"
     tools:context=".MainActivityOld">
 
+    <TextView
+        android:id="@+id/location_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="#333"
+        android:textSize="18dp" />
+
     <Button
         android:id="@+id/btn_start_location_updates"
         android:layout_width="wrap_content"
@@ -23,12 +31,12 @@
         android:enabled="false"
         android:text="@string/stop_updates" />
 
-    <Button
-        android:id="@+id/btn_get_last_location"
+    <TextView
+        android:id="@+id/updated_on"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/get_last_location" />
+        android:layout_height="63dp"
+        android:layout_marginTop="30dp"
+        android:textSize="11dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,19 +44,4 @@
         android:layout_marginTop="50dp"
         android:gravity="center_horizontal"
         android:text="Location updates will be received only when app is foreground" />
-
-    <TextView
-        android:id="@+id/location_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textColor="#333"
-        android:textSize="18dp" />
-
-    <TextView
-        android:id="@+id/updated_on"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:textSize="11dp" />
 </LinearLayout>

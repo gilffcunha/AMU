@@ -32,15 +32,6 @@ public class Protocol
         return type;
     }
 
-    @Override
-    public String toString() {
-        return "Protocol{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
-
     public void setType(String type) {
         this.type = type;
     }
@@ -66,5 +57,14 @@ public class Protocol
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getType(), getDescription());
+    }
+
+    @Override
+    public String toString() {
+        return "Protocol{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

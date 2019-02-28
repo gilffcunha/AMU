@@ -4,28 +4,39 @@ import java.util.HashMap;
 
 public class User
 {
+     private int id;
      private String name;
      private String email;
      private String password;
-     private Double height;
-     private Experiment experiment;
+     private HashMap<Integer, Experiment> experiments;
 
-     public User(String name, String email, String password, Double height, Experiment experiment) {
+     public User(int id, String name, String email, String password, Double height, HashMap<Integer, Experiment> experiments) {
+            this.id = id;
             this.name = name;
             this.email = email;
             this.password = password;
-            this.height = height;
-            this.experiment = experiment;
+            this.experiments = new HashMap<Integer, Experiment>();
+
+            for(int i : experiments.keySet())
+                this.experiments.put(i,experiments.get(i).clone());
+
      }
 
      public User()
      {
+            this.id = 0;
             this.name = "";
             this.email = "";
             this.password = "";
-            this.height = 0.0;
-            this.experiment = new Experiment();
+            this.experiments = new HashMap<Integer, Experiment>();
      }
+
+     public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id) {this.id = id;}
 
      public String getName() {
             return name;
@@ -51,26 +62,17 @@ public class User
             this.password = password;
         }
 
-     public Double getHeight() {
-            return height;
+     public HashMap<Integer, Experiment> getExperiment() {
+            return this.experiments;
         }
 
-     public void setHeight(Double height) {
-            this.height = height;
+     public void setExperiment(HashMap<Integer, Experiment> experiments) {
+         for(int i : experiments.keySet())
+             this.experiments.put(i,experiments.get(i).clone());
         }
 
-     public Experiment getExperiment() {
-            return experiment;
-        }
-
-     public void setExperiment(Experiment experiment) {
-            this.experiment = experiment;
-        }
-
-     public void addExperiment(String protocol, String androidVersion, String brand, String model, HashMap<Integer, Sample> samples)
+     public void addExperiment(Experiment exp)
      {
-         Experiment e = new Experiment(protocol, androidVersion, brand, model, samples);
-
-         this.setExperiment(e.clone());
+         this.experiments.put(exp.getId(), exp);
      }
 }
