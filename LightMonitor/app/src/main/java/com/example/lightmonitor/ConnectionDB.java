@@ -22,35 +22,30 @@ public class ConnectionDB
     {
         this.url = "jdbc:mysql://localhost:3306/mydb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
         this.username = "root";
-        this.password = "pass"; // metam a vossa password
+        this.password = "26121996"; // metam a vossa password
     }
 
-    public boolean isConnected()
-    {
-        boolean ret = false;
-        Connection con = null;
-
-        con = establishConnection();
-
-        if(con != null)
-        {
-            ret = true;
-        }
-
-        return ret;
+    public String getUrl() {
+        return url;
     }
 
-    public Connection establishConnection()
-    {
-        System.out.println("Connecting database...");
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-        try (
-                Connection connection = DriverManager.getConnection(url, username, password)) {
-                System.out.println("Database connected!");
-                return connection;
-        } catch (
-                SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
-        }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

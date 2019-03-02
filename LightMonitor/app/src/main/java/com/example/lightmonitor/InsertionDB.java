@@ -1,10 +1,16 @@
 package com.example.lightmonitor;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 public class InsertionDB
 {
@@ -15,23 +21,28 @@ public class InsertionDB
         this.connection = new ConnectionDB();
     }
 
+    /*
     public boolean login(String username, String password)
     {
         boolean ret = false;
+        String query = "Select C.Name, C.password from User as C" +
+                    " where C.Name = '" + username + "';";
 
         try {
-            Statement stmt = this.connection.establishConnection().createStatement();
-            ResultSet res = stmt.executeQuery("Select C.username, C.password from User as C" +
-                    " where C.username = " + username );
+
+            Connection connection = DriverManager.getConnection(this.connection.getUrl(), this.connection.getUsername(), this.connection.getPassword());
+            Statement stmt = connection.prepareStatement(query);
+            ResultSet res = stmt.executeQuery(query);
 
             if(res != null)
             {
-                String pass = (String) res.getObject("password");
+                String pass = (String) res.getObject("Password");
                 if(pass.equals(password))
                 {
                     ret = true;
                 }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -39,89 +50,84 @@ public class InsertionDB
             return ret;
         }
     }
+    */
 
-    public boolean insertUser(String username, String email, String password)
+    public void insertUser(String username, String email, String password)
     {
+
         boolean ret = false;
+        String query =  "INSERT INTO User (Name, Email, Password) " +
+                "VALUES ('" + username + "' ,'" +  email + "' ,'" + password + "');";
 
         try {
-            Statement stmt = this.connection.establishConnection().createStatement();
-            ResultSet res = stmt.executeQuery("INSERT INTO User (Name, Email, Password)\n" +
-                    "VALUES (" + username + " ," +  email + " ," + password + ");");
+            Connection connection = DriverManager.getConnection(this.connection.getUrl(), this.connection.getUsername(), this.connection.getPassword());
 
-            if(res != null)
-            {
-                ret = true;
-            }
+            Statement stmt = connection.prepareStatement(query);
+
+            ((PreparedStatement) stmt).execute();
+
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            return ret;
         }
     }
 
-    public boolean insertProtocol(String type, String text)
+
+    public void insertProtocol(String type, String text)
     {
-        boolean ret = false;
+        String query = "INSERT INTO Protocol (Type, Description)\n" +
+                    "VALUES ('" + type + "' ,'" +  text  + "');";
 
         try {
-            Statement stmt = this.connection.establishConnection().createStatement();
-            ResultSet res = stmt.executeQuery("INSERT INTO Protocol (Type, text)\n" +
-                    "VALUES (" + type + " ," +  text  + ");");
+             Connection connection = DriverManager.getConnection(this.connection.getUrl(), this.connection.getUsername(), this.connection.getPassword());
 
-            if(res != null)
-            {
-                ret = true;
-            }
+            Statement stmt = connection.prepareStatement(query);
+
+            ((PreparedStatement) stmt).execute();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            return ret;
         }
     }
-
-    public boolean insertSample(int experimentID, double latitude, double longitude, double luminusity, LocalDateTime date)
+    /*
+    public void insertSample(int experimentID, double latitude, double longitude, double luminusity, LocalDateTime date)
     {
         boolean ret = false;
-        Timestamp timestamp = Timestamp.valueOf(String.valueOf(date));
+        Timestamp timestamp = (Timestamp) Timestamp.valueOf(String.valueOf(date));
+
+        LocalDateTime ldt = LocalDateTime.now();
+        Timestamp t = (Timestamp) Timestamp.from(Instant.from(date.atZone(ZoneId.from(date))));
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss");
+
+        String formatDateTime = date.format(formatter);
+
+
+        String query = "INSERT INTO Sample (Latitude, Longitude, Luminusity, TimeStamp, Experiment_ID) " +
+                    "VALUES (" + latitude + ", " +  longitude  + ", " + luminusity + " ," + timestamp + ", " + experimentID + ");";
 
         try {
-            Statement stmt = this.connection.establishConnection().createStatement();
-            ResultSet res = stmt.executeQuery("INSERT INTO Sample (Latitude, Longitude, Luminusity, TimeStamp, Experiment_ID)\n" +
-                    "VALUES (" + latitude + " ," +  longitude  + " ," + luminusity + " ," + timestamp + " ," + experimentID + ");");
+            Connection connection = DriverManager.getConnection(this.connection.getUrl(), this.connection.getUsername(), this.connection.getPassword());
 
-            if(res != null)
-            {
-                ret = true;
-            }
+            Statement stmt = connection.prepareStatement(query);
+
+            ((PreparedStatement) stmt).execute();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            return ret;
         }
     }
-
-    public boolean insertExperiment(String androidVersion, String brand, String model, int userId, int protocol)
-    {
+*/
+    public void insertExperiment(String androidVersion, String brand, String model, int userId, int protocol) {
         boolean ret = false;
+        String query = "INSERT INTO Experiment (AndroidVersion, Brand, Model, User_ID, Protocol_ID)\n" +
+                "VALUES ('" + androidVersion + "' ,'" + brand + "' ,'" + model + "' ,'" + userId + "' ,'" + protocol + "');";
 
         try {
-            Statement stmt = this.connection.establishConnection().createStatement();
-            ResultSet res = stmt.executeQuery("INSERT INTO Experiment (AndroidVersion, Brand, Model, User_ID, Protocol_ID)\n" +
-                    "VALUES (" + androidVersion + " ," +  brand  + " ," + model + " ," + userId + " ," + protocol + ");");
+            Connection connection = DriverManager.getConnection(this.connection.getUrl(), this.connection.getUsername(), this.connection.getPassword());
 
-            if(res != null)
-            {
-                ret = true;
-            }
+            Statement stmt = connection.prepareStatement(query);
+
+            ((PreparedStatement) stmt).execute();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            return ret;
         }
     }
 }
