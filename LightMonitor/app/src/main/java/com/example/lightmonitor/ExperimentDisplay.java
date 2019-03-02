@@ -36,6 +36,8 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -54,24 +56,37 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Reference: https://github.com/googlesamples/android-play-location/tree/master/LocationUpdates
  */
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class ExperimentDisplay extends AppCompatActivity implements SensorEventListener, OnMapReadyCallback {
 
-
+    // ENTITIES
     private Experiment experiment;
     private Sample sample;
 
+    // LIGHT SENSOR
     private SensorManager sensorManager;
     private Sensor sensor;
     private  SensorEvent event;
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    // MAP
+    private MapView mapView;
+    private GoogleMap gmap;
 
-    @BindView(R.id.location_result)
-    TextView txtLocationResult;
+    private static final String TAG = ExperimentDisplay.class.getSimpleName();
+
+    private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
+
+    /*@BindView(R.id.location_result)
+    TextView txtLocationResult;*/
 
     @BindView(R.id.updated_on)
     TextView txtUpdatedOn;
@@ -122,6 +137,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // initialize light sensor
         sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
+        // initializate map view
+        Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
+        }
+
+        mapView = findViewById(R.id.map_view);
+        mapView.onCreate(mapViewBundle);
+        mapView.getMapAsync(this);
 
     }
 
@@ -199,14 +224,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
         if (mCurrentLocation != null) {
-            txtLocationResult.setText(
+           /* txtLocationResult.setText(
                     "Lat: " + mCurrentLocation.getLatitude() + ", " +
                             "Lng: " + mCurrentLocation.getLongitude()
-            );
+            );*/
 
             // giving a blink animation on TextView
-            txtLocationResult.setAlpha(0);
-            txtLocationResult.animate().alpha(1).setDuration(300);
+            // txtLocationResult.setAlpha(0);
+            // txtLocationResult.animate().alpha(1).setDuration(300);
 
             // location last updated time
             txtUpdatedOn.setText("Last updated on: " + mLastUpdateTime);
@@ -223,12 +248,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             sample.setLongitude(mCurrentLocation.getLongitude());
 
             // Light - level of luminosity
-            if(event.sensor.getType() == Sensor.TYPE_LIGHT)
+            if (event.sensor.getType() == Sensor.TYPE_LIGHT)
                 sample.setLuminusity(event.values[0]);
 
             experiment.addSample(sample);
 
-            System.out.println("Sample: "+ sample.toString());
+            System.out.println("Sample: " + sample.toString());
+
+            // MAP
+
+            if (mCurrentLocation != null) {
+                LatLng coord = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+                gmap.moveCamera(CameraUpdateFactory.newLatLng(coord));
+            }
         }
 
         toggleButtons();
@@ -240,6 +272,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         outState.putBoolean("is_requesting_updates", mRequestingLocationUpdates);
         outState.putParcelable("last_known_location", mCurrentLocation);
         outState.putString("last_updated_on", mLastUpdateTime);
+
+        // MAP
+        Bundle mapViewBundle = outState.getBundle(MAP_VIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(MAP_VIEW_BUNDLE_KEY, mapViewBundle);
+        }
+
+        mapView.onSaveInstanceState(mapViewBundle);
 
     }
 
@@ -267,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                         Log.i(TAG, "All location settings are satisfied.");
 
-                        Toast.makeText(getApplicationContext(), "A experiência começou!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "The experiment has started!", Toast.LENGTH_SHORT).show();
 
                         //noinspection MissingPermission
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest,
@@ -288,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                     // Show the dialog by calling startResolutionForResult(), and check the
                                     // result in onActivityResult().
                                     ResolvableApiException rae = (ResolvableApiException) e;
-                                    rae.startResolutionForResult(MainActivity.this, REQUEST_CHECK_SETTINGS);
+                                    rae.startResolutionForResult(ExperimentDisplay.this, REQUEST_CHECK_SETTINGS);
                                 } catch (IntentSender.SendIntentException sie) {
                                     Log.i(TAG, "PendingIntent unable to execute request.");
                                 }
@@ -298,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                         "fixed here. Fix in Settings.";
                                 Log.e(TAG, errorMessage);
 
-                                Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                                Toast.makeText(ExperimentDisplay.this, errorMessage, Toast.LENGTH_LONG).show();
                         }
 
                         updateLocationUI();
@@ -347,7 +388,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getApplicationContext(), "Location updates stopped!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "The experiment has stopped!", Toast.LENGTH_SHORT).show();
                         toggleButtons();
                     }
                 });
@@ -397,6 +438,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onResume() {
         super.onResume();
 
+        // LIGHT SENSOR
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         // Resuming location updates depending on button state and
@@ -406,6 +448,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         updateLocationUI();
+
+        // MAP
+        mapView.onResume();
     }
 
     private boolean checkPermissions() {
@@ -419,21 +464,61 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onPause() {
         super.onPause();
 
+        // LIGHT SENSOR
         sensorManager.unregisterListener(this);
 
         if (mRequestingLocationUpdates) {
             // pausing location updates
             stopLocationUpdates();
         }
+
+        // MAP
+        mapView.onStop();
+
     }
 
+    // LIGHT SENSOR
     @Override
     public void onSensorChanged(SensorEvent event1) {
         event = event1;
     }
-
+    // LIGHT SENSOR
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+    // MAP
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
+    // MAP
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mapView.onStop();
+    }
+    // MAP
+    @Override
+    protected void onDestroy() {
+        mapView.onDestroy();
+        super.onDestroy();
+    }
+    // MAP
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+    // MAP
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        gmap = googleMap;
+        gmap.setMinZoomPreference(12);
+
+        LatLng portugal = new LatLng(40.0332629, -7.8896263);
+        gmap.moveCamera(CameraUpdateFactory.newLatLng(portugal));
 
     }
 }
