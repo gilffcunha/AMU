@@ -67,4 +67,8 @@ public class Protocol
                 ", description='" + description + '\'' +
                 '}';
     }
+
+    public void insertIntoDB(InsertionDB insert){
+        insert.insertProtocol(this);
+    }
 }

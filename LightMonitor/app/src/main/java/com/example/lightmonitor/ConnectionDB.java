@@ -1,9 +1,5 @@
 package com.example.lightmonitor;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 public class ConnectionDB
 {
     private String url;
@@ -20,10 +16,10 @@ public class ConnectionDB
 
     public ConnectionDB()
     {
-        this.url = "jdbc:mysql://localhost:3306/mydb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-        this.username = "root";
-        this.password = "26121996"; // metam a vossa password
-    }
+        this.url = "jdbc:mysql://localhost:3306/luxdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; // set your own url
+        this.username = "root"; // set your own username
+        this.password = "n1554554"; // set your own password
+     }
 
     public String getUrl() {
         return url;
@@ -48,4 +44,5 @@ public class ConnectionDB
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

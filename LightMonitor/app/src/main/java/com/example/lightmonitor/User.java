@@ -2,6 +2,7 @@ package com.example.lightmonitor;
 
 import java.util.HashMap;
 
+
 public class User
 {
      private int id;
@@ -74,5 +75,9 @@ public class User
      public void addExperiment(Experiment exp)
      {
          this.experiments.put(exp.getId(), exp);
+     }
+
+     public void insertIntoDB(InsertionDB insert){
+         insert.insertUser(this);
      }
 }

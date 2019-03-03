@@ -185,7 +185,7 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
         // EXPERIMENT
         experiment = new Experiment();
 
-        experiment.setProtocol(prot);
+        experiment.setProtocol(prot.getId());
         experiment.setAndroidVersion(Build.VERSION.RELEASE);
         experiment.setBrand(Build.BRAND);
         experiment.setModel(Build.MODEL);
@@ -249,7 +249,7 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
 
             // Light - level of luminosity
             if (event.sensor.getType() == Sensor.TYPE_LIGHT)
-                sample.setLuminusity(event.values[0]);
+                sample.setLuminosity(event.values[0]);
 
             experiment.addSample(sample);
 

@@ -6,43 +6,43 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+
 
 public class InsertionDB
 {
-    private ConnectionDB connection;
+    private ConnectionDB connDB;
+    private Connection connection;
+    private String encrypt_key;
 
-    public InsertionDB()
+    public InsertionDB(ConnectionDB connDB)
     {
-        this.connection = new ConnectionDB();
+        this.connDB = connDB;
+        this.encrypt_key = "AmU1819";
+        this.connection = null;
     }
 
-    /*
-    public boolean login(String username, String password)
-    {
+
+    public boolean validateLogin(String email, String password)  {
         boolean ret = false;
-        String query = "Select C.Name, C.password from User as C" +
-                    " where C.Name = '" + username + "';";
+        String query = "Select Email, CAST(aes_decrypt(password,'AmU1819') as char(45)) as Password from User" +
+                    " where Email = '" + email + "';";
 
         try {
-
-            Connection connection = DriverManager.getConnection(this.connection.getUrl(), this.connection.getUsername(), this.connection.getPassword());
+            connection = DriverManager.getConnection(connDB.getUrl(), connDB.getUsername(), connDB.getPassword());
             Statement stmt = connection.prepareStatement(query);
             ResultSet res = stmt.executeQuery(query);
+            res.next();
 
             if(res != null)
             {
-                String pass = (String) res.getObject("Password");
+                String pass = res.getString("Password");
                 if(pass.equals(password))
                 {
                     ret = true;
                 }
             }
 
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -50,82 +50,125 @@ public class InsertionDB
             return ret;
         }
     }
-    */
 
-    public void insertUser(String username, String email, String password)
-    {
 
-        boolean ret = false;
+    public void insertUser(User user)
+    {   // INSERT USER
         String query =  "INSERT INTO User (Name, Email, Password) " +
-                "VALUES ('" + username + "' ,'" +  email + "' ,'" + password + "');";
+                "VALUES ('" + user.getName() + "' ,'" +  user.getEmail() + "' , AES_ENCRYPT('" + user.getPassword() + "','"+encrypt_key+"'));";
+
+        // SET USER ID
+        String query2 =  "SELECT MAX(id) as ID FROM User; ";
+
 
         try {
-            Connection connection = DriverManager.getConnection(this.connection.getUrl(), this.connection.getUsername(), this.connection.getPassword());
+            connection = DriverManager.getConnection(connDB.getUrl(), connDB.getUsername(), connDB.getPassword());
 
-            Statement stmt = connection.prepareStatement(query);
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.execute();
 
-            ((PreparedStatement) stmt).execute();
 
+            Statement stmt2 = connection.createStatement();
+            ResultSet res = stmt2.executeQuery(query2);
+            res.next();
+
+            if(res != null) {
+                int id = res.getInt("ID");
+                user.setId(id);
+            }
+
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
 
-    public void insertProtocol(String type, String text)
-    {
+    public void insertProtocol(Protocol protocol)
+    {   // INSERT PROTOCOL
         String query = "INSERT INTO Protocol (Type, Description)\n" +
-                    "VALUES ('" + type + "' ,'" +  text  + "');";
+                    "VALUES ('" + protocol.getType() + "' ,'" +  protocol.getDescription()  + "');";
+
+        // SET PROTOCOL ID
+        String query2 =  "SELECT MAX(id) as ID FROM Protocol; ";
 
         try {
-             Connection connection = DriverManager.getConnection(this.connection.getUrl(), this.connection.getUsername(), this.connection.getPassword());
+            connection = DriverManager.getConnection(connDB.getUrl(), connDB.getUsername(), connDB.getPassword());
 
             Statement stmt = connection.prepareStatement(query);
-
             ((PreparedStatement) stmt).execute();
+
+            Statement stmt2 = connection.createStatement();
+            ResultSet res = stmt2.executeQuery(query2);
+            res.next();
+
+            if(res != null) {
+                int id = res.getInt("ID");
+                protocol.setId(id);
+            }
+
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    /*
-    public void insertSample(int experimentID, double latitude, double longitude, double luminusity, LocalDateTime date)
-    {
-        boolean ret = false;
-        Timestamp timestamp = (Timestamp) Timestamp.valueOf(String.valueOf(date));
 
-        LocalDateTime ldt = LocalDateTime.now();
-        Timestamp t = (Timestamp) Timestamp.from(Instant.from(date.atZone(ZoneId.from(date))));
+    public void insertExperiment(Experiment experiment) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd hh:mm:ss");
-
-        String formatDateTime = date.format(formatter);
-
-
-        String query = "INSERT INTO Sample (Latitude, Longitude, Luminusity, TimeStamp, Experiment_ID) " +
-                    "VALUES (" + latitude + ", " +  longitude  + ", " + luminusity + " ," + timestamp + ", " + experimentID + ");";
-
-        try {
-            Connection connection = DriverManager.getConnection(this.connection.getUrl(), this.connection.getUsername(), this.connection.getPassword());
-
-            Statement stmt = connection.prepareStatement(query);
-
-            ((PreparedStatement) stmt).execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-*/
-    public void insertExperiment(String androidVersion, String brand, String model, int userId, int protocol) {
-        boolean ret = false;
+        // INSERT EXPERIMENT
         String query = "INSERT INTO Experiment (AndroidVersion, Brand, Model, User_ID, Protocol_ID)\n" +
-                "VALUES ('" + androidVersion + "' ,'" + brand + "' ,'" + model + "' ,'" + userId + "' ,'" + protocol + "');";
+                "VALUES ('" + experiment.getAndroidVersion() + "' ,'" + experiment.getBrand() + "' ,'" + experiment.getModel() + "' ,'" + experiment.getUserId() + "' ,'" + experiment.getProtocolId() + "');";
+
+        // SET EXPERIMENT ID
+        String query2 =  "SELECT MAX(id) as ID FROM Experiment; ";
 
         try {
-            Connection connection = DriverManager.getConnection(this.connection.getUrl(), this.connection.getUsername(), this.connection.getPassword());
+            connection = DriverManager.getConnection(connDB.getUrl(), connDB.getUsername(), connDB.getPassword());
 
             Statement stmt = connection.prepareStatement(query);
-
             ((PreparedStatement) stmt).execute();
+
+            Statement stmt2 = connection.createStatement();
+            ResultSet res = stmt2.executeQuery(query2);
+            res.next();
+
+            if(res != null) {
+                int id = res.getInt("ID");
+                experiment.setId(id);
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void insertSample(Sample sample)
+    {
+        // INSERT SAMPLE
+        String query = "INSERT INTO Sample (Latitude, Longitude, Luminosity, TimeStamp, Experiment_ID) " +
+                    "VALUES (" + sample.getLatitude() + ", " +  sample.getLongitude()  + ", " + sample.getLuminosity() + " ,'" + sample.getTimestamp() + "', " + sample.getExperimentID() + ");";
+
+        // SET SAMPLE ID
+        String query2 =  "SELECT MAX(id) as ID FROM Sample; ";
+
+        try {
+            connection = DriverManager.getConnection(connDB.getUrl(), connDB.getUsername(), connDB.getPassword());
+
+            Statement stmt = connection.prepareStatement(query);
+            ((PreparedStatement) stmt).execute();
+
+            Statement stmt2 = connection.createStatement();
+            ResultSet res = stmt2.executeQuery(query2);
+            res.next();
+
+            if(res != null) {
+                int id = res.getInt("ID");
+                sample.setId(id);
+            }
+
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -1,20 +1,30 @@
 package com.example.lightmonitor;
 
-import java.time.LocalTime;
+import java.util.Date;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 public class DefaultSettings
 {
-    private static LocalTime minHour;
-    private static LocalTime maxHour;
+    private static Date minHour;
+    private static Date maxHour;
     // Limitamos também localização??
 
     public DefaultSettings()
     {
-        this.minHour = LocalTime.of(20, 00);
-        this.maxHour = LocalTime.of(04,0);
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY,20);
+        cal.set(Calendar.MINUTE,0);
+        // min hour
+        this.minHour = cal.getTime();
+
+        cal.set(Calendar.HOUR_OF_DAY,20);
+        cal.set(Calendar.MINUTE,0);
+        // max hour
+        this.maxHour = cal.getTime();
     }
 
-    public DefaultSettings(LocalTime minHour, LocalTime maxHour) {
+    public DefaultSettings(Timestamp minHour, Timestamp maxHour) {
         this.minHour = minHour;
         this.maxHour = maxHour;
     }
@@ -23,7 +33,7 @@ public class DefaultSettings
     {
         boolean ret = false;
 
-        if(a.getTimestamp().toLocalTime().isAfter(minHour) && a.getTimestamp().toLocalTime().isBefore(maxHour))
+        if(a.getTimestamp().after(minHour) && a.getTimestamp().before(maxHour))
         {
             ret = true;
         }

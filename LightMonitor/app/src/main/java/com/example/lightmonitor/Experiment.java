@@ -5,39 +5,43 @@ import java.util.HashMap;
 public class Experiment
 {
     private int id;
-    private Protocol protocol;
+    private int protocolID;
     private String androidVersion;
     private String brand;
     private String model;
+    private int userId;
     private HashMap<Integer, Sample> samples;
 
-    public Experiment(int id, Protocol protocol, String androidVersion, String brand, String model, HashMap<Integer, Sample> samples) {
+    public Experiment(int id, int protocolID, String androidVersion, String brand, String model, int userId, HashMap<Integer, Sample> samples) {
 
         this.id = id;
-        this.protocol = protocol;
+        this.protocolID = protocolID;
         this.androidVersion = androidVersion;
         this.brand = brand;
         this.model = model;
+        this.userId = userId;
         this.samples = this.validateSamples(samples);
     }
 
     public Experiment(Experiment e)
     {
         this.id = e.getId();
-        this.protocol = e.getProtocol();
+        this.protocolID = e.getProtocolId();
         this.samples = e.getSamples();
         this.brand = e.getBrand();
         this.model = e.getModel();
+        this.userId = e.getUserId();
         this.androidVersion = e.getAndroidVersion();
     }
 
     public Experiment()
     {
         this.id = 0;
-        this.protocol = new Protocol();
+        this.protocolID = 0;
         this.androidVersion = "";
         this.brand = "";
         this.model = "";
+        this.userId = 0;
         this.samples = new HashMap<>();
     }
 
@@ -48,12 +52,12 @@ public class Experiment
 
     public void setId(int id) {this.id = id;}
 
-    public Protocol getProtocol() {
-        return protocol;
+    public int getProtocolId() {
+        return protocolID;
     }
 
-    public void setProtocol(Protocol protocol) {
-        this.protocol = protocol;
+    public void setProtocol(int protocolID) {
+        this.protocolID = protocolID;
     }
 
     public String getAndroidVersion() {
@@ -79,6 +83,13 @@ public class Experiment
     public void setModel(String model) {
         this.model = model;
     }
+
+    public int getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(int userId) {this.userId = userId;}
 
     public HashMap<Integer, Sample> getSamples() {
         return samples;
@@ -108,10 +119,14 @@ public class Experiment
         return new Experiment(this);
     }
 
-    public String toString() {return "Experiment - Protocol:" + protocol + "Android version: "+ androidVersion +" "+"| Brand: "+ brand +" "+"| Model: "+ model +"\n";}
+    public String toString() {return "Experiment - User: " + userId + "Protocol: " + protocolID + "Android version: "+ androidVersion +" "+"| Brand: "+ brand +" "+"| Model: "+ model +"\n";}
 
 
     public void addSample(Sample a){
         samples.put(a.getId(),a);
+    }
+
+    public void insertIntoDB(InsertionDB insert){
+        insert.insertExperiment(this);
     }
 }

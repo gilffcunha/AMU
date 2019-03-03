@@ -1,6 +1,6 @@
 package com.example.lightmonitor;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 public class Sample
 {
@@ -8,14 +8,16 @@ public class Sample
     private double latitude;
     private double longitude;
     private double luminosity;
-    private LocalDateTime timestamp;
+    private Timestamp timestamp;
+    private int experimentID;
 
-    public Sample(int id, double latitude, double longitude, double luminosity, LocalDateTime timestamp) {
+    public Sample(int id, double latitude, double longitude, double luminosity,int experimentID) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.luminosity = luminosity;
-        this.timestamp = timestamp;
+        this.timestamp = new Timestamp(System.currentTimeMillis());
+        this.experimentID = experimentID;
     }
 
     public Sample(Sample a)
@@ -23,8 +25,9 @@ public class Sample
         this.id = a.getId();
         this.latitude = a.getLatitude();
         this.longitude = a.getLongitude();
-        this.luminosity = a.getLuminusity();
-        this.timestamp = a.getTimestamp();
+        this.luminosity = a.getLuminosity();
+        this.experimentID = a.getExperimentID();
+        this.timestamp = new Timestamp(System.currentTimeMillis());
     }
 
     public Sample()
@@ -33,7 +36,8 @@ public class Sample
         this.latitude = 0;
         this.longitude = 0;
         this.luminosity = 0;
-        this.timestamp = LocalDateTime.now();
+        this.experimentID = 0;
+        this.timestamp = new Timestamp(System.currentTimeMillis());
     }
 
     public int getId()
@@ -59,20 +63,28 @@ public class Sample
         this.longitude = longitude;
     }
 
-    public double getLuminusity() {
+    public double getLuminosity() {
         return luminosity;
     }
 
-    public void setLuminusity(double luminosity) {
+    public void setLuminosity(double luminosity) {
         this.luminosity = luminosity;
     }
 
-    public LocalDateTime getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public int getExperimentID() {
+        return experimentID;
+    }
+
+    public void setExperimentID(int experimentID) {
+        this.experimentID = experimentID;
     }
 
     public Sample clone()
@@ -80,5 +92,9 @@ public class Sample
         return new Sample(this);
     }
 
-    public  String toString(){return "Id: "+id+"| Latitude: "+latitude+" | Longitude: "+longitude+"| Luminosity: "+luminosity+" ! Timestamp: "+timestamp;}
+    public  String toString(){return "Id: "+id+"| Latitude: "+latitude+" | Longitude: "+longitude+"| Luminosity: "+luminosity+" | Timestamp: "+timestamp+ " | Experiment ID: " + experimentID;}
+
+    public void insertIntoDB(InsertionDB insert){
+        insert.insertSample(this);
+    }
 }
