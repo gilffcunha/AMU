@@ -21,6 +21,9 @@ public class InsertionDB
         this.connection = null;
     }
 
+    public Connection getConnection(){
+        return this.connection;
+    }
 
     public boolean validateLogin(String email, String password)  {
         boolean ret = false;
@@ -29,6 +32,7 @@ public class InsertionDB
 
         try {
             connection = DriverManager.getConnection(connDB.getUrl(), connDB.getUsername(), connDB.getPassword());
+            System.out.print(connection);
             Statement stmt = connection.prepareStatement(query);
             ResultSet res = stmt.executeQuery(query);
             res.next();

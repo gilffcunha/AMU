@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -36,8 +37,9 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.JointType;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.RoundCap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,6 +53,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +64,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+
 
 /**
  * Reference: https://github.com/googlesamples/android-play-location/tree/master/LocationUpdates
@@ -80,6 +84,8 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
     // MAP
     private MapView mapView;
     private GoogleMap gmap;
+
+    private PolylineOptions plo;
 
     private static final String TAG = ExperimentDisplay.class.getSimpleName();
 
@@ -125,7 +131,7 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.experiment_display);
         ButterKnife.bind(this);
 
         // initialize the necessary libraries
@@ -404,6 +410,30 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
         }
     }*/
 
+
+    // ROUTE ON MAP
+
+    @OnClick(R.id.btn_show_route)
+    public void showRoute() {
+        gmap.setMinZoomPreference(11);
+
+        LatLng coord;
+        HashMap<Integer, Sample> samples = experiment.getSamples();
+
+        for( Sample s : samples.values()) {
+            coord = new LatLng(s.getLatitude(), s.getLongitude());
+            plo.add(coord);
+        }
+
+        plo.color(Color.RED);
+        plo.geodesic(true);
+        plo.startCap(new RoundCap());
+        plo.width(20);
+        plo.jointType(JointType.BEVEL);
+
+        gmap.addPolyline(plo);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -514,6 +544,8 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
     // MAP
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        plo =  new PolylineOptions();
         gmap = googleMap;
         gmap.setMinZoomPreference(12);
 

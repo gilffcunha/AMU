@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ExperimentDisplay"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/experiment_display">
 
     <TextView
         android:layout_width="wrap_content"
