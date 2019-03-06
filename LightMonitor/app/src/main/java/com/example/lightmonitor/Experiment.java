@@ -1,8 +1,9 @@
 package com.example.lightmonitor;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Experiment
+public class Experiment implements Serializable
 {
     private int id;
     private int protocolID;
@@ -11,6 +12,8 @@ public class Experiment
     private String model;
     private int userId;
     private HashMap<Integer, Sample> samples;
+
+    private int index;
 
     public Experiment(int id, int protocolID, String androidVersion, String brand, String model, int userId, HashMap<Integer, Sample> samples) {
 
@@ -21,6 +24,8 @@ public class Experiment
         this.model = model;
         this.userId = userId;
         this.samples = this.validateSamples(samples);
+
+        this.index = 0;
     }
 
     public Experiment(Experiment e)
@@ -124,6 +129,12 @@ public class Experiment
 
     public void addSample(Sample a){
         samples.put(a.getId(),a);
+    }
+
+    public void addSample2(Sample a){
+        samples.put(index,a);
+        a.setId(index);
+        index++;
     }
 
     public void insertIntoDB(InsertionDB insert){

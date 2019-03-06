@@ -1,8 +1,9 @@
 package com.example.lightmonitor;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Sample
+public class Sample implements Serializable
 {
     private int id;
     private double latitude;

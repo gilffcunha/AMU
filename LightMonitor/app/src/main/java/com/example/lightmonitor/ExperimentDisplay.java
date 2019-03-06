@@ -7,7 +7,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -37,9 +36,6 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.maps.model.JointType;
-import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.maps.model.RoundCap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,18 +55,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-
 
 /**
  * Reference: https://github.com/googlesamples/android-play-location/tree/master/LocationUpdates
  */
 
-public class ExperimentDisplay extends AppCompatActivity implements SensorEventListener, OnMapReadyCallback {
+public class ExperimentDisplay extends AppCompatActivity implements SensorEventListener {
 
     // ENTITIES
     private Experiment experiment;
@@ -81,15 +71,9 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
     private Sensor sensor;
     private  SensorEvent event;
 
-    // MAP
-    private MapView mapView;
-    private GoogleMap gmap;
-
-    private PolylineOptions plo;
 
     private static final String TAG = ExperimentDisplay.class.getSimpleName();
 
-    private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
 
     /*@BindView(R.id.location_result)
     TextView txtLocationResult;*/
@@ -131,7 +115,7 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.experiment_display);
+        setContentView(R.layout.activity_experiment_display);
         ButterKnife.bind(this);
 
         // initialize the necessary libraries
@@ -143,17 +127,6 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
         // initialize light sensor
         sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-
-        // initializate map view
-        Bundle mapViewBundle = null;
-        if (savedInstanceState != null) {
-            mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
-        }
-
-        mapView = findViewById(R.id.map_view);
-        mapView.onCreate(mapViewBundle);
-        mapView.getMapAsync(this);
-
     }
 
     private void init() {
@@ -257,16 +230,11 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
             if (event.sensor.getType() == Sensor.TYPE_LIGHT)
                 sample.setLuminosity(event.values[0]);
 
-            experiment.addSample(sample);
+            //experiment.addSample(sample);
+            experiment.addSample2(sample);
 
             System.out.println("Sample: " + sample.toString());
 
-            // MAP
-
-            if (mCurrentLocation != null) {
-                LatLng coord = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-                gmap.moveCamera(CameraUpdateFactory.newLatLng(coord));
-            }
         }
 
         toggleButtons();
@@ -278,16 +246,6 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
         outState.putBoolean("is_requesting_updates", mRequestingLocationUpdates);
         outState.putParcelable("last_known_location", mCurrentLocation);
         outState.putString("last_updated_on", mLastUpdateTime);
-
-        // MAP
-        Bundle mapViewBundle = outState.getBundle(MAP_VIEW_BUNDLE_KEY);
-        if (mapViewBundle == null) {
-            mapViewBundle = new Bundle();
-            outState.putBundle(MAP_VIEW_BUNDLE_KEY, mapViewBundle);
-        }
-
-        mapView.onSaveInstanceState(mapViewBundle);
-
     }
 
     private void toggleButtons() {
@@ -410,29 +368,23 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
         }
     }*/
 
+    // SHOW MAP
+    @OnClick(R.id.btn_show_map)
+    public void showMapRoute() {
 
-    // ROUTE ON MAP
-
-    @OnClick(R.id.btn_show_route)
-    public void showRoute() {
-        gmap.setMinZoomPreference(11);
-
-        LatLng coord;
         HashMap<Integer, Sample> samples = experiment.getSamples();
 
-        for( Sample s : samples.values()) {
-            coord = new LatLng(s.getLatitude(), s.getLongitude());
-            plo.add(coord);
+        if (!samples.isEmpty()) {
+            Intent intent = new Intent(ExperimentDisplay.this, MapDisplay.class);
+            intent.putExtra("Samples", samples);
+
+            startActivity(intent);
+        }else {
+            Toast.makeText(getApplicationContext(), "You can only see the map after the experiment", Toast.LENGTH_SHORT).show();
         }
 
-        plo.color(Color.RED);
-        plo.geodesic(true);
-        plo.startCap(new RoundCap());
-        plo.width(20);
-        plo.jointType(JointType.BEVEL);
-
-        gmap.addPolyline(plo);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -478,9 +430,6 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
         }
 
         updateLocationUI();
-
-        // MAP
-        mapView.onResume();
     }
 
     private boolean checkPermissions() {
@@ -502,9 +451,6 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
             stopLocationUpdates();
         }
 
-        // MAP
-        mapView.onStop();
-
     }
 
     // LIGHT SENSOR
@@ -515,42 +461,6 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
     // LIGHT SENSOR
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
-    // MAP
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mapView.onStart();
-    }
-    // MAP
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mapView.onStop();
-    }
-    // MAP
-    @Override
-    protected void onDestroy() {
-        mapView.onDestroy();
-        super.onDestroy();
-    }
-    // MAP
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }
-    // MAP
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-        plo =  new PolylineOptions();
-        gmap = googleMap;
-        gmap.setMinZoomPreference(12);
-
-        LatLng portugal = new LatLng(40.0332629, -7.8896263);
-        gmap.moveCamera(CameraUpdateFactory.newLatLng(portugal));
 
     }
 }
