@@ -128,10 +128,6 @@ public class Experiment implements Serializable
 
 
     public void addSample(Sample a){
-        samples.put(a.getId(),a);
-    }
-
-    public void addSample2(Sample a){
         samples.put(index,a);
         a.setId(index);
         index++;

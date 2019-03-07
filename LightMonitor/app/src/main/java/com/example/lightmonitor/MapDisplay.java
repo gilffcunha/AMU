@@ -4,8 +4,6 @@ import android.graphics.Color;
 
 import android.os.Bundle;
 
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabItem;
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.maps.model.JointType;
@@ -14,10 +12,8 @@ import com.google.android.gms.maps.model.RoundCap;
 
 import java.util.HashMap;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Optional;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -85,7 +81,7 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
             plo.add(coord);
         }
 
-        gmap.setMinZoomPreference(10);
+        gmap.setMinZoomPreference(11);
 
         gmap.moveCamera(CameraUpdateFactory.newLatLng(coord));
 

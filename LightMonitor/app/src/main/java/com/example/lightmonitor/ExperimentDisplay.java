@@ -62,6 +62,12 @@ import butterknife.OnClick;
 
 public class ExperimentDisplay extends AppCompatActivity implements SensorEventListener {
 
+    // Connection
+    ConnectionDB conn;
+    // DB INSERTION
+    InsertionDB insertion;
+
+
     // ENTITIES
     private Experiment experiment;
     private Sample sample;
@@ -156,15 +162,25 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
         builder.addLocationRequest(mLocationRequest);
         mLocationSettingsRequest = builder.build();
 
-        // PROTOCOL
-        Protocol prot = new Protocol();
-        prot.setType("Luminosidade de uma passadeira");
-        prot.setDescription("1- PASSO 1\n2- PASSO 2\n3- PASSO 3");
+
+        // Connection
+        conn = new ConnectionDB();
+
+        // Insert
+        insertion = new InsertionDB(conn);
+
+        /*
+        PROCOTOL ARE SAVED IN THE DATABASE "HARD CODED"
+        THIS ACTIVITY RECIEVES THE PROTOCOL ID WHEN CHOSEN
+         */
+
+        // PROTOCOL ID
+        int protId = 1; //getIntent().getExtras().get("ProtocolID");
 
         // EXPERIMENT
         experiment = new Experiment();
 
-        experiment.setProtocol(prot.getId());
+        experiment.setProtocol(protId);
         experiment.setAndroidVersion(Build.VERSION.RELEASE);
         experiment.setBrand(Build.BRAND);
         experiment.setModel(Build.MODEL);
@@ -203,14 +219,6 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
 
 
         if (mCurrentLocation != null) {
-           /* txtLocationResult.setText(
-                    "Lat: " + mCurrentLocation.getLatitude() + ", " +
-                            "Lng: " + mCurrentLocation.getLongitude()
-            );*/
-
-            // giving a blink animation on TextView
-            // txtLocationResult.setAlpha(0);
-            // txtLocationResult.animate().alpha(1).setDuration(300);
 
             // location last updated time
             txtUpdatedOn.setText("Last updated on: " + mLastUpdateTime);
@@ -230,8 +238,7 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
             if (event.sensor.getType() == Sensor.TYPE_LIGHT)
                 sample.setLuminosity(event.values[0]);
 
-            //experiment.addSample(sample);
-            experiment.addSample2(sample);
+            experiment.addSample(sample);
 
             System.out.println("Sample: " + sample.toString());
 
@@ -383,6 +390,27 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
             Toast.makeText(getApplicationContext(), "You can only see the map after the experiment", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    // SEND
+    @OnClick(R.id.btn_send)
+    public void sendExperiment() {
+
+        // SAVE EXPERIMENT AND SAMPLES INTO DB
+        HashMap<Integer, Sample> samples = experiment.getSamples();
+
+        if (experiment != null && !samples.isEmpty()) {
+
+            //experiment.insertIntoDB(insertion); // insert experiment
+
+           // for(Sample s : samples.values())  // insert samples
+            //    s.insertIntoDB(insertion);
+
+           // finish();
+
+        }else {
+            Toast.makeText(getApplicationContext(), "You can only send the data after the experiment is completed", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

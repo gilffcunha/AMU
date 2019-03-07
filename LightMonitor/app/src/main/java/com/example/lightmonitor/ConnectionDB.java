@@ -7,8 +7,7 @@ public class ConnectionDB
     private String password;
 
 
-    public ConnectionDB(String url, String username, String password)
-    {
+    public ConnectionDB(String url, String username, String password){
         this.url = url;
         this.username = username;
         this.password = password;

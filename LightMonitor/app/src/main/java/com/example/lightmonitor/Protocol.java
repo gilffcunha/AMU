@@ -1,5 +1,6 @@
 package com.example.lightmonitor;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Protocol
@@ -7,17 +8,23 @@ public class Protocol
     private int id;
     private String type;
     private String description;
+    private HashMap<Integer, Experiment> experiments;
 
-    public Protocol(int id, String type, String description) {
+    public Protocol(int id, String type, String description,HashMap<Integer, Experiment> experiments) {
         this.id = id;
         this.type = type;
         this.description = description;
+        this.experiments = new HashMap<Integer, Experiment>();
+
+        for(int i : experiments.keySet())
+            this.experiments.put(i,experiments.get(i).clone());
     }
 
     public Protocol() {
         this.id = 0;
         this.type = "";
         this.description = "";
+        this.experiments = new HashMap<Integer, Experiment>();
     }
 
     public int getId() {
@@ -42,6 +49,20 @@ public class Protocol
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public HashMap<Integer, Experiment> getExperiment() {
+        return this.experiments;
+    }
+
+    public void setExperiment(HashMap<Integer, Experiment> experiments) {
+        for(int i : experiments.keySet())
+            this.experiments.put(i,experiments.get(i).clone());
+    }
+
+    public void addExperiment(Experiment exp)
+    {
+        this.experiments.put(exp.getId(), exp);
     }
 
     @Override

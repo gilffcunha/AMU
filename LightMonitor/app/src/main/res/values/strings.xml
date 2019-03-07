@@ -7,4 +7,5 @@
     <string name="btn_show_route">Show Route</string>
     <string name="btn_show_areas">Show Ligh Areas</string>
     <string name="btn_close">Close</string>
+    <string name="btn_send">Send</string>
 </resources>
