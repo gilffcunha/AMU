@@ -175,12 +175,19 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
          */
 
         // PROTOCOL ID
-        int protId = 1; //getIntent().getExtras().get("ProtocolID");
+        Protocol protocol = new Protocol(); //getIntent().getExtras().get("Protocol");
+
+        protocol.setId(1);
+        protocol.setType("Luminosidade em Passadeira");
+        protocol.setDescription("1ºPASSO: A\n2ºPASSO: B\n3ºPASSO: C\n...");
+
+        TextView protocol_desc = findViewById(R.id.protocol_desc);
+        protocol_desc.setText(protocol.getDescription());
 
         // EXPERIMENT
         experiment = new Experiment();
 
-        experiment.setProtocol(protId);
+        experiment.setProtocol(protocol.getId());
         experiment.setAndroidVersion(Build.VERSION.RELEASE);
         experiment.setBrand(Build.BRAND);
         experiment.setModel(Build.MODEL);
@@ -279,7 +286,7 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
                     public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                         Log.i(TAG, "All location settings are satisfied.");
 
-                        Toast.makeText(getApplicationContext(), "The experiment has started!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "A experiência começou!", Toast.LENGTH_SHORT).show();
 
                         //noinspection MissingPermission
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest,
@@ -359,7 +366,7 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getApplicationContext(), "The experiment has stopped!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "A experiência foi parada!", Toast.LENGTH_SHORT).show();
                         toggleButtons();
                     }
                 });
@@ -387,7 +394,7 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
 
             startActivity(intent);
         }else {
-            Toast.makeText(getApplicationContext(), "You can only see the map after the experiment", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Experiência tem de ser concluida", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -407,9 +414,8 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
             //    s.insertIntoDB(insertion);
 
            // finish();
-
         }else {
-            Toast.makeText(getApplicationContext(), "You can only send the data after the experiment is completed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Experiência tem de ser concluida", Toast.LENGTH_SHORT).show();
         }
     }
 
