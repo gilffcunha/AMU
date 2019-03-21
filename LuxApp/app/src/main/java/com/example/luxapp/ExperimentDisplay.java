@@ -4,10 +4,10 @@ package com.example.luxapp;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Service;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.content.SyncStatusObserver;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -62,6 +62,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -89,6 +90,7 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
     private  SensorEvent event;
 
     private int sample_N;
+    private  int index;
     private ProgressBar pBar;
 
     private static final String TAG = ExperimentDisplay.class.getSimpleName();
@@ -106,13 +108,13 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
     // location last updated time
     private String mLastUpdateTime;
 
-    // location updates interval - 10sec
-    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
+    // location updates interval - 3.5sec
+    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 3500;
 
-    // fastest updates interval - 5 sec
+    // fastest updates interval - 1 sec
     // location updates will be received if another app is requesting the locations
     // than your app can handle
-    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 5000;
+    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 1000;
 
     private static final int REQUEST_CHECK_SETTINGS = 100;
 
@@ -182,6 +184,8 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
 
         THIS ACTIVITY RECIEVES THE PROTOCOL ID AND USER ID WHEN CHOSEN
          */
+
+        index = 0;
 
         // PROTOCOL ID
         Protocol protocol = new Protocol(); //getIntent().getExtras().get("Protocol");
@@ -279,53 +283,63 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
      * location updates will be requested
      */
     private void startLocationUpdates() {
-        mSettingsClient
-                .checkLocationSettings(mLocationSettingsRequest)
-                .addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
-                    @SuppressLint("MissingPermission")
-                    @Override
-                    public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                        Log.i(TAG, "All location settings are satisfied.");
 
-                        Toast.makeText(getApplicationContext(), "A experiência começou!", Toast.LENGTH_SHORT).show();
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
 
-                        //noinspection MissingPermission
-                        mFusedLocationClient.requestLocationUpdates(mLocationRequest,
-                                mLocationCallback, Looper.myLooper());
+        // IF IT'S NIGHT
+        if( (timeOfDay >= 21 && timeOfDay <= 24) || (timeOfDay >= 0 && timeOfDay <= 6)) {
+            mSettingsClient
+                    .checkLocationSettings(mLocationSettingsRequest)
+                    .addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+                        @SuppressLint("MissingPermission")
+                        @Override
+                        public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                            Log.i(TAG, "All location settings are satisfied.");
 
-                        updateLocationUI();
-                    }
-                })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        int statusCode = ((ApiException) e).getStatusCode();
-                        switch (statusCode) {
-                            case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                                Log.i(TAG, "Location settings are not satisfied. Attempting to upgrade " +
-                                        "location settings ");
-                                try {
-                                    // Show the dialog by calling startResolutionForResult(), and check the
-                                    // result in onActivityResult().
-                                    ResolvableApiException rae = (ResolvableApiException) e;
-                                    rae.startResolutionForResult(ExperimentDisplay.this, REQUEST_CHECK_SETTINGS);
-                                } catch (IntentSender.SendIntentException sie) {
-                                    Log.i(TAG, "PendingIntent unable to execute request.");
-                                }
-                                break;
-                            case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                                String errorMessage = "Location settings are inadequate, and cannot be " +
-                                        "fixed here. Fix in Settings.";
-                                Log.e(TAG, errorMessage);
+                            Toast.makeText(getApplicationContext(), "A experiência começou!", Toast.LENGTH_SHORT).show();
 
-                                Toast.makeText(ExperimentDisplay.this, errorMessage, Toast.LENGTH_LONG).show();
+                            //noinspection MissingPermission
+                            mFusedLocationClient.requestLocationUpdates(mLocationRequest,
+                                    mLocationCallback, Looper.myLooper());
+
+                            updateLocationUI();
                         }
+                    })
+                    .addOnFailureListener(this, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            int statusCode = ((ApiException) e).getStatusCode();
+                            switch (statusCode) {
+                                case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                                    Log.i(TAG, "Location settings are not satisfied. Attempting to upgrade " +
+                                            "location settings ");
+                                    try {
+                                        // Show the dialog by calling startResolutionForResult(), and check the
+                                        // result in onActivityResult().
+                                        ResolvableApiException rae = (ResolvableApiException) e;
+                                        rae.startResolutionForResult(ExperimentDisplay.this, REQUEST_CHECK_SETTINGS);
+                                    } catch (IntentSender.SendIntentException sie) {
+                                        Log.i(TAG, "PendingIntent unable to execute request.");
+                                    }
+                                    break;
+                                case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                                    String errorMessage = "Location settings are inadequate, and cannot be " +
+                                            "fixed here. Fix in Settings.";
+                                    Log.e(TAG, errorMessage);
 
-                        updateLocationUI();
-                    }
-                });
+                                    Toast.makeText(ExperimentDisplay.this, errorMessage, Toast.LENGTH_LONG).show();
+                            }
+
+                            updateLocationUI();
+                        }
+                    });
+        }else{ // IF ITS DAY
+            Toast.makeText(ExperimentDisplay.this, "A experiência apenas pode ser realizada à noite (21h às 6h)", Toast.LENGTH_LONG).show();
+        }
     }
 
+    // START EXPERIMENT
     @OnClick(R.id.btn_start_location_updates)
     public void startLocationButtonClick() {
         // Requesting ACCESS_FINE_LOCATION using Dexter library
@@ -354,10 +368,13 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
                 }).check();
     }
 
+    // STOP EXPERIMENT
     @OnClick(R.id.btn_stop_location_updates)
     public void stopLocationButtonClick() {
         mRequestingLocationUpdates = false;
-        stopLocationUpdates();
+        stopLocationUpdates(); // STOP
+        sendData(); // SEND DATA
+        showMapRoute(); // SHOW MAP
     }
 
     public void stopLocationUpdates() {
@@ -375,24 +392,28 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
 
 
     // SHOW MAP
-    @OnClick(R.id.btn_show_map)
     public void showMapRoute() {
 
         samples = experiment.getSamples();
 
         if (!samples.isEmpty()) {
-            Intent intent = new Intent(ExperimentDisplay.this, MapDisplay.class);
-            intent.putExtra("Samples", samples);
-
-            startActivity(intent);
-        }else {
+            try {
+                Intent intent = new Intent(ExperimentDisplay.this, MapDisplay.class);
+                intent.putExtra("Samples", samples);
+                startActivity(intent,
+                        ActivityOptions.makeSceneTransitionAnimation(ExperimentDisplay.this).toBundle());
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else {
             Toast.makeText(getApplicationContext(), "Experiência tem de ser concluida", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    // SEND
-    @OnClick(R.id.btn_send)
+
+    // SEND DATA
     public void sendData() {
 
         samples = experiment.getSamples();
@@ -423,18 +444,14 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
             public void onResponse(String response) {
                  if(!response.contains("Falha no envio dos dados...")){
                      experiment.setId(Integer.parseInt(response));
-                     // Send samples
                      System.out.println("INFO:");
                      System.out.println("EXPERIMENT: " + experiment.toString());
                      // SEND Samples
-                     sample_N = samples.size();
-                     for (Sample s : samples.values()) {
-                         sample = s;
-                         s.setExperimentID(experiment.getId());
-                         System.out.println("SAMPLE: "+s.toString());
-                         sample_N--;
-                         sendSample();
-                     }
+                     sample_N = samples.size() - 1;
+                     sample = samples.get(index);
+                     sample.setExperimentID(experiment.getId());
+                     System.out.println("SAMPLE: "+sample.toString());
+                     sendSample();
                  }
             }
         }, new Response.ErrorListener() {
@@ -463,6 +480,7 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
                 params.put(Constants.KEY_MODEL,experiment.getModel());
                 params.put(Constants.KEY_PROTOCOL_ID,String.valueOf(experiment.getProtocolId()));
                 params.put(Constants.KEY_USER_ID,String.valueOf(experiment.getUserId()));
+
                 return params;
             }
 
@@ -488,9 +506,15 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
 
                if(response.contains("Dados enviados com sucesso!")) {
 
-                   if (sample_N == 0) {
+                   if (index == sample_N) {
                        pBar.setProgress(100);
                        Toast.makeText(ExperimentDisplay.this, response, Toast.LENGTH_SHORT).show();
+                   }else{
+                       index++;
+                       sample = samples.get(index);
+                       sample.setExperimentID(experiment.getId());
+                       System.out.println("SAMPLE: "+sample.toString());
+                       sendSample();
                    }
                }else{
                    pBar.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
@@ -522,7 +546,7 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
                 params.put(Constants.KEY_LONG,String.valueOf(sample.getLongitude()));
                 params.put(Constants.KEY_LUM,String.valueOf(sample.getLuminosity()));
                 params.put(Constants.KEY_TIME,sample.getTimestamp().toString());
-                params.put(Constants.KEY_EXP_ID,String.valueOf(experiment.getId()));
+                params.put(Constants.KEY_EXP_ID,String.valueOf(sample.getExperimentID()));
 
                 return params;
             }
@@ -541,10 +565,16 @@ public class ExperimentDisplay extends AppCompatActivity implements SensorEventL
 
 
     // CLOSE
-
     @OnClick(R.id.btn_close)
-    public void closeActivity() {
-        finish();
+    public void menu(){
+        // Menu Activity transition
+        try {
+            Intent intent = new Intent(ExperimentDisplay.this, MenuActivity.class);
+            startActivity(intent,
+                    ActivityOptions.makeSceneTransitionAnimation(ExperimentDisplay.this).toBundle());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -1,0 +1,8 @@
+Protocolo: Iluminação do Parque Público
+
+1º - Antes de iniciar a experiência certifique-se que se encontra no parque no qual pretende efetuar a medição. 
+2º - Dirija-se a um ponto inicial do percurso e comece a experiência ao clicar no botão "iniciar experiência".
+3º - Segure o telemóvel de modo a que a face frontal esteja voltada para cima, aproximadamente à altura do peito.
+4º - Certifique-se que o sensor de luz (câmera frontal) se encontra desobstruída.
+5º - Caminhe ao longo do percurso.
+6º - Após concluir o percurso pretendido, clique em "concluir experiência".

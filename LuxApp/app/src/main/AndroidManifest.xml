@@ -16,26 +16,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity   android:name=".MenuActivity"
-                    android:label="@string/app_name"/>
+                    android:label="@string/app_name"
+                    android:launchMode="singleTop"/>
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:launchMode="singleTop"/>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:parentActivityName=".RegisterActivity" />
         <activity
-            android:name=".MapDisplay"
-            android:parentActivityName=".ExperimentDisplay" />
+            android:name=".MapDisplay" />
         <activity
-            android:name=".ExperimentDisplay"
-            android:launchMode="singleTop"/>
+            android:name=".ExperimentDisplay">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

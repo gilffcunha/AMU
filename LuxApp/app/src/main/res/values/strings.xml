@@ -6,7 +6,7 @@
     <string name="btn_show_map">Mostrar Mapa</string>
     <string name="btn_show_route">Mostrar Rota</string>
     <string name="btn_show_areas">Mostrar áreas de luz</string>
-    <string name="btn_close">Fechar</string>
+    <string name="btn_close">Menu</string>
     <string name="btn_send">Enviar</string>
     <string name="login_form">Faça login</string>
     <string name="username">Nome</string>

@@ -1,6 +1,8 @@
 package com.example.luxapp;
 
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.graphics.Color;
 
 import android.os.Bundle;
@@ -77,12 +79,11 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
         for( Sample s : samples.values()) {
             coord = new LatLng(s.getLatitude(), s.getLongitude());
 
-            System.out.print("COORDENADAS:\n" + coord);
 
             plo.add(coord);
         }
 
-        gmap.setMinZoomPreference(11);
+        gmap.setMinZoomPreference(16);
 
         gmap.moveCamera(CameraUpdateFactory.newLatLng(coord));
 
@@ -103,9 +104,16 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
 
     // CLOSE
 
-    @OnClick(R.id.btn_close)
-    public void closeActivity() {
-        finish();
+    @OnClick(R.id.btn_menu)
+    public void menu(){
+        // Menu Activity transition
+        try {
+            Intent intent = new Intent(MapDisplay.this, MenuActivity.class);
+            startActivity(intent,
+                    ActivityOptions.makeSceneTransitionAnimation(MapDisplay.this).toBundle());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
