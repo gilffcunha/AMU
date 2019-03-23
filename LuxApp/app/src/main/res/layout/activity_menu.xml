@@ -1,9 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MenuActivity">
 
-</android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="149dp"
+        android:layout_height="136dp"
+        android:layout_gravity="center"
+        android:adjustViewBounds="false"
+        android:background="@drawable/userimage"
+        android:contentDescription="@string/userimage"
+        android:cropToPadding="false" />
+
+    <TextView
+        android:id="@+id/hi"
+        android:layout_width="143dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:text="@string/bem_vindo"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="137dp"
+        android:layout_height="38dp"
+        android:layout_gravity="center"
+        android:text="@string/name"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/instMenu1"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/instMenu1"
+        android:textAlignment="center"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/instMenu2"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/instMenu2"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="17sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/instMenu3"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/instMenu3"
+        android:textAlignment="center"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/proto_street"
+        android:layout_width="316dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/protocolo_de_rua" />
+
+    <Button
+        android:id="@+id/proto_crossroad"
+        android:layout_width="316dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/protocolo_de_passadeira" />
+
+    <Button
+        android:id="@+id/proto_park"
+        android:layout_width="316dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/protocolo_de_parque" />
+
+    <Button
+        android:id="@+id/proto_bus"
+        android:layout_width="316dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/proto_bus" />
+
+
+</LinearLayout>
