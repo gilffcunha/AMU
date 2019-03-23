@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MapDisplay">
+    tools:context=".Activities.MapDisplay">
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/map_view"
         android:layout_width="374dp"
-        android:layout_height="324dp"
+        android:layout_height="397dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,40 +30,38 @@
 
     <Button
         android:id="@+id/btn_menu"
-        android:layout_width="wrap_content"
+        android:layout_width="305dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="124dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="44dp"
         android:text="Voltar para menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/btn_show_areas"
-        android:layout_width="wrap_content"
+        android:layout_width="305dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="34dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginBottom="24dp"
         android:text="Mostrar áreas de luz"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_show_route"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map_view"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/map_view" />
 
     <Button
         android:id="@+id/btn_show_route"
-        android:layout_width="wrap_content"
+        android:layout_width="305dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="128dp"
         android:text="Mostrar Rota"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_show_areas"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

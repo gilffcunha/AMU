@@ -1,5 +1,7 @@
-package com.example.luxapp;
+package com.example.luxapp.Activities;
 
+import com.example.luxapp.R;
+import com.example.luxapp.Classes.*;
 import android.app.ActivityOptions;
 import android.content.Intent;
 
@@ -57,11 +59,11 @@ public class LoginActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.LOGIN_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
-                if(response.contains("Login com sucesso!")){
+                if(!response.contains("Falha no login, os campos são inválidos!")){
                     // Menu Activity transition
                     try {
                         Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                        intent.putExtra("userID", Integer.parseInt(response));
                         startActivity(intent,
                                 ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
                         finish();
@@ -69,6 +71,8 @@ public class LoginActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                else
+                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override

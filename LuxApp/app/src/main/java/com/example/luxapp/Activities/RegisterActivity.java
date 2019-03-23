@@ -1,13 +1,13 @@
-package com.example.luxapp;
+package com.example.luxapp.Activities;
 
 
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
-
+import com.example.luxapp.Classes.*;
+import com.example.luxapp.R;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;

@@ -1,6 +1,8 @@
-package com.example.luxapp;
+package com.example.luxapp.Activities;
 
-
+import com.example.luxapp.BuildConfig;
+import com.example.luxapp.R;
+import com.example.luxapp.Classes.*;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
