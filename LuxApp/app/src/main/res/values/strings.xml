@@ -25,10 +25,18 @@
     <string name="protocolo_de_rua">Protocolo de Rua</string>
     <string name="protocolo_de_passadeira">Protocolo de Passadeira</string>
     <string name="protocolo_de_parque">Protocolo de Parque</string>
-    <string name="bem_vindo">Bem-vindo,</string>
+    <string name="bem_vindo">Bem-vindo!</string>
     <string name="instMenu1">A Lux Android App permite a recolha de dados sobre a localização e nível de iluminação do espaço que o rodeia.\n</string>
     <string name="proto_bus">Protocolo de Paragem de Autocarro</string>
     <string name="instMenu3">Por favor, escolha um dos protocolos seguintes, para realizar a experiência:</string>
     <string name="instMenu2">Para tal, é necessário realizar uma experiência num ambiente noturno!\n</string>
     <string name="userimage">userImage</string>
+    <string name="btn_parque">Experiência no Parque</string>
+    <string name="btn_paragem">Experiência na Paragem</string>
+    <string name="btn_passadeira">Experiência na Passadeira</string>
+    <string name="btn_rua">Experiência na Rua</string>
+    <string name="btn_iniciarParagem">Iniciar Experiência</string>
+    <string name="btn_iniciarPassadeira">Iniciar Experiência</string>
+    <string name="btn_iniciarParque">Iniciar Experiência</string>
+    <string name="btn_iniciarRua">Iniciar Experiência</string>
 </resources>

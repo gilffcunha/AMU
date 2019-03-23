@@ -1,4 +1,4 @@
-package com.example.luxapp;
+package com.example.luxapp.Classes;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -109,12 +109,7 @@ public class Experiment implements Serializable
         HashMap<Integer, Sample> validSamples = new HashMap<Integer, Sample>();
 
         for(Sample a : samples.values())
-        {
-            if(SampleConfig.validate(a))
-            {
-                validSamples.put(a.getId(), a.clone());
-            }
-        }
+            validSamples.put(a.getId(), a.clone());
 
         return validSamples;
     }

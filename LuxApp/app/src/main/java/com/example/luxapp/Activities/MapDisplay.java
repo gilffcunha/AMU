@@ -1,6 +1,7 @@
-package com.example.luxapp;
+package com.example.luxapp.Activities;
 
-
+import com.example.luxapp.R;
+import com.example.luxapp.Classes.*;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,6 +38,8 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
     private MapView mapView;
     private GoogleMap gmap;
 
+    private int userID;
+
     private static final String TAG = MapDisplay.class.getSimpleName();
 
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
@@ -48,6 +51,7 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
         setContentView(R.layout.activity_map_display);
         ButterKnife.bind(this);
 
+        userID = (Integer) getIntent().getExtras().get("userID");
 
         // initializate map view
         Bundle mapViewBundle = null;
@@ -109,6 +113,7 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
         // Menu Activity transition
         try {
             Intent intent = new Intent(MapDisplay.this, MenuActivity.class);
+            intent.putExtra("userID", userID);
             startActivity(intent,
                     ActivityOptions.makeSceneTransitionAnimation(MapDisplay.this).toBundle());
         } catch(Exception e) {

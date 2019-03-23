@@ -1,4 +1,4 @@
-package com.example.luxapp;
+package com.example.luxapp.Classes;
 
 public class Constants {
 

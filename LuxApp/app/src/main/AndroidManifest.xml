@@ -15,30 +15,50 @@
         android:roundIcon="@mipmap/lux_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity   android:name=".MenuActivity"
+        <activity   android:name=".Activities.MenuActivity"
                     android:label="@string/app_name"
                     android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name=".Activities.ParagemActivity"
+            android:label="Protocolo: Paragem de Autocarro"
+            android:parentActivityName=".Activities.MenuActivity" >
+        </activity>
+
+        <activity
+            android:name=".Activities.ParqueActivity"
+            android:label="Protocolo: Parque"
+            android:parentActivityName=".Activities.MenuActivity" >
+        </activity>
+
+        <activity
+            android:name=".Activities.PassadeiraActivity"
+            android:label="Protocolo: Passadeira"
+            android:parentActivityName=".Activities.MenuActivity" >
+        </activity>
+
+        <activity
+            android:name=".Activities.RuaActivity"
+            android:label="Protocolo: Rua"
+            android:parentActivityName=".Activities.MenuActivity" >
+        </activity>
+        <activity
+            android:name=".Activities.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
-            android:label="@string/title_activity_register"
-            android:launchMode="singleTop"/>
-        <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".RegisterActivity" />
+            android:parentActivityName=".Activities.RegisterActivity" />
         <activity
-            android:name=".MapDisplay" />
+            android:name=".Activities.MapDisplay" />
         <activity
-            android:name=".ExperimentDisplay">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name=".Activities.ExperimentDisplay">
         </activity>
         <meta-data
             android:name="com.google.android.gms.version"

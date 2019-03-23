@@ -1,8 +1,8 @@
 Protocolo: Iluminação da Passadeira
 
-1º - Antes de iniciar a experiência certifique-se que se encontra cerca de 3 metros da passadeira, na qual pretende efetuar a medição. 
-2º - Comece a experiência ao clicar no botão "iniciar experiência".
+1º - Antes de iniciar a experiência certifique-se de que se encontra cerca de 3 metros da passadeira, na qual pretende efetuar a experiência para obter medições. 
+2º - Comece a experiência ao clicar no botão "Iniciar Experiência".
 3º - Segure o telemóvel de modo a que a face frontal esteja voltada para cima, aproximadamente à altura do peito.
 4º - Certifique-se que o sensor de luz (câmera frontal) se encontra desobstruída.
 5º - Caminhe ao longo da passadeira
-6º - Após atravessar a passadeira, afasta-se 3 metros desta e clique em "concluir experiência".
+6º - Após atravessar a passadeira, afasta-se 3 metros desta e clique em "Concluir Experiência".

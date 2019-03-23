@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ExperimentDisplay">
+    tools:context=".Activities.ExperimentDisplay">
 
     <Button
         android:id="@+id/btn_start_location_updates"

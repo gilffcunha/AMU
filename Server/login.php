@@ -17,7 +17,14 @@
 					$qry_dupe = "SELECT * FROM User WHERE email = '$email' AND password = '$enc_pw'";
 					$dupe_results = mysqli_query($con, $qry_dupe);
 					if(mysqli_num_rows($dupe_results) >0){
-						echo "Login com sucesso!";
+						$sql2 = "SELECT max(id) FROM User";
+						$result_id = mysqli_query($con,$sql2);
+						$row = mysqli_fetch_array($result_id);
+                        $data = $row[0];
+                    
+                       if($data){
+                          echo $data;
+                       }
 					}else{
 						echo "Falha no login, os campos são inválidos!";
 					}
