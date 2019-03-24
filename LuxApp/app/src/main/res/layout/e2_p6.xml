@@ -26,7 +26,7 @@
         android:layout_marginBottom="265dp"
         android:ems="10"
         android:inputType="textMultiLine"
-        android:text="Após realizar o percurso pretendido, clique em &quot;Concluir Experiência&quot;."
+        android:text="Após realizar o percurso pretendido, clique em &quot;Concluir Experiência&quot;.\n\n Nota: É necessário ativar a localização e a conexão à Internet, no dispositivo."
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
