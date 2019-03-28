@@ -29,6 +29,8 @@ import java.util.Map;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -58,53 +60,64 @@ public class RegisterActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnreg)
     public void register() {
+        String REGEX = "^([\\w-\\.]+){1,64}@([\\w&&[^_]]+){2,255}.[a-z]{2,}$";
+        String INPUT = email.getText().toString().trim();
 
+        Pattern p = Pattern.compile(REGEX);
+        Matcher m = p.matcher(INPUT);
+
+        if(!m.find())
+        {
+            Toast.makeText(RegisterActivity.this, "Email Inválido", Toast.LENGTH_SHORT).show();
+        }
+        else{
         // REGISTER
-        Toast.makeText(RegisterActivity.this, "A registar...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "A registar...", Toast.LENGTH_SHORT).show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.REGISTER_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
-                if(response.contains("Registado com sucesso!"))
-                    log();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof TimeoutError) {
-                    Toast.makeText(RegisterActivity.this, "Timeout Error", Toast.LENGTH_SHORT).show();
-                } else if (error instanceof NoConnectionError) {
-                    Toast.makeText(RegisterActivity.this, "No Connection Error", Toast.LENGTH_SHORT).show();
-                } else if (error instanceof AuthFailureError) {
-                    Toast.makeText(RegisterActivity.this, "Authentication Failure Error", Toast.LENGTH_SHORT).show();
-                } else if (error instanceof NetworkError) {
-                    Toast.makeText(RegisterActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
-                } else if (error instanceof ServerError) {
-                    Toast.makeText(RegisterActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-                } else if (error instanceof ParseError) {
-                    Toast.makeText(RegisterActivity.this, "JSON Parse Error", Toast.LENGTH_SHORT).show();
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.REGISTER_URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+                    if (response.contains("Registado com sucesso!"))
+                        log();
                 }
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put(Constants.KEY_NAME, user.getText().toString().trim());
-                params.put(Constants.KEY_EMAIL, email.getText().toString().trim());
-                params.put(Constants.KEY_PASSWORD, password.getText().toString().trim());
-                return params;
-            }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    if (error instanceof TimeoutError) {
+                        Toast.makeText(RegisterActivity.this, "Timeout Error", Toast.LENGTH_SHORT).show();
+                    } else if (error instanceof NoConnectionError) {
+                        Toast.makeText(RegisterActivity.this, "No Connection Error", Toast.LENGTH_SHORT).show();
+                    } else if (error instanceof AuthFailureError) {
+                        Toast.makeText(RegisterActivity.this, "Authentication Failure Error", Toast.LENGTH_SHORT).show();
+                    } else if (error instanceof NetworkError) {
+                        Toast.makeText(RegisterActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                    } else if (error instanceof ServerError) {
+                        Toast.makeText(RegisterActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                    } else if (error instanceof ParseError) {
+                        Toast.makeText(RegisterActivity.this, "JSON Parse Error", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put(Constants.KEY_NAME, user.getText().toString().trim());
+                    params.put(Constants.KEY_EMAIL, email.getText().toString().trim());
+                    params.put(Constants.KEY_PASSWORD, password.getText().toString().trim());
+                    return params;
+                }
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-                headers.put("User-Agent", "LuxApp");
-                return headers;
-            }
-        };
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    headers.put("User-Agent", "LuxApp");
+                    return headers;
+                }
+            };
 
-        MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(stringRequest);
+            MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(stringRequest);
+        }
     }
 
     @OnClick(R.id.btnlog)
