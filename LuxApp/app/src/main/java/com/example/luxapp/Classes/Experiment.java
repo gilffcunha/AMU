@@ -9,7 +9,17 @@ public class Experiment implements Serializable
     private int protocolID;
     private String androidVersion;
     private String brand;
+
+    public double getAvg_lux() {
+        return avg_lux;
+    }
+
+    public void setAvg_lux(double avg_lux) {
+        this.avg_lux = avg_lux;
+    }
+
     private String model;
+    private double avg_lux;
     private int userId;
     private HashMap<Integer, Sample> samples;
 
@@ -28,6 +38,19 @@ public class Experiment implements Serializable
         this.index = 0;
     }
 
+    public Experiment(int id, int protocolID, String androidVersion, String brand, String model, int userId, double avg_lux,HashMap<Integer, Sample> samples) {
+
+        this.id = id;
+        this.protocolID = protocolID;
+        this.androidVersion = androidVersion;
+        this.brand = brand;
+        this.model = model;
+        this.userId = userId;
+        this.samples = this.validateSamples(samples);
+        this.avg_lux = avg_lux;
+        this.index = 0;
+    }
+
     public Experiment(Experiment e)
     {
         this.id = e.getId();
@@ -37,6 +60,7 @@ public class Experiment implements Serializable
         this.model = e.getModel();
         this.userId = e.getUserId();
         this.androidVersion = e.getAndroidVersion();
+        // this.avg_lux = e.getAvg_Lux();
     }
 
     public Experiment()
@@ -47,6 +71,7 @@ public class Experiment implements Serializable
         this.brand = "";
         this.model = "";
         this.userId = 0;
+        this.avg_lux = 0.0;
         this.samples = new HashMap<>();
     }
 
