@@ -8,6 +8,8 @@ public class Constants {
     public static final String LOGIN_URL = DB_URL + "login.php";
     public static final String EXPERIMENT_URL = DB_URL + "experiment.php";
     public static final String SAMPLE_URL = DB_URL + "sample.php";
+    public static final String RANK_URL = DB_URL + "rank.php";
+    public static final String LUX_URL = DB_URL + "lux.php";
 
     // USER
     public static final String KEY_NAME = "name";
@@ -18,6 +20,7 @@ public class Constants {
     public static final String KEY_ANDROID = "android_version";
     public static final String KEY_MODEL = "model";
     public static final String KEY_BRAND = "brand";
+    public static final String KEY_LUX = "lux";
     public static final String KEY_USER_ID = "user_id";
     public static final String KEY_PROTOCOL_ID = "protocol_id";
 

@@ -9,34 +9,12 @@ public class Experiment implements Serializable
     private int protocolID;
     private String androidVersion;
     private String brand;
-
-    public double getAvg_lux() {
-        return avg_lux;
-    }
-
-    public void setAvg_lux(double avg_lux) {
-        this.avg_lux = avg_lux;
-    }
-
     private String model;
     private double avg_lux;
     private int userId;
     private HashMap<Integer, Sample> samples;
 
     private int index;
-
-    public Experiment(int id, int protocolID, String androidVersion, String brand, String model, int userId, HashMap<Integer, Sample> samples) {
-
-        this.id = id;
-        this.protocolID = protocolID;
-        this.androidVersion = androidVersion;
-        this.brand = brand;
-        this.model = model;
-        this.userId = userId;
-        this.samples = this.validateSamples(samples);
-
-        this.index = 0;
-    }
 
     public Experiment(int id, int protocolID, String androidVersion, String brand, String model, int userId, double avg_lux,HashMap<Integer, Sample> samples) {
 
@@ -60,7 +38,7 @@ public class Experiment implements Serializable
         this.model = e.getModel();
         this.userId = e.getUserId();
         this.androidVersion = e.getAndroidVersion();
-        // this.avg_lux = e.getAvg_Lux();
+        this.avg_lux = e.getAvg_lux();
     }
 
     public Experiment()
@@ -121,6 +99,14 @@ public class Experiment implements Serializable
 
     public void setUserId(int userId) {this.userId = userId;}
 
+    public double getAvg_lux() {
+        return avg_lux;
+    }
+
+    public void setAvg_lux(double avg_lux) {
+        this.avg_lux = avg_lux;
+    }
+
     public HashMap<Integer, Sample> getSamples() {
         return samples;
     }
@@ -144,7 +130,7 @@ public class Experiment implements Serializable
         return new Experiment(this);
     }
 
-    public String toString() {return "Experiment - User: " + userId + "Protocol: " + protocolID + "Android version: "+ androidVersion +" "+"| Brand: "+ brand +" "+"| Model: "+ model +"\n";}
+    public String toString() {return "Experiment - User: " + userId + "Protocol: " + protocolID + "Android version: "+ androidVersion +" "+"| Brand: "+ brand +" "+"| Model: "+ model +"| AvgLux: "+ avg_lux +"\n";}
 
 
     public void addSample(Sample a){

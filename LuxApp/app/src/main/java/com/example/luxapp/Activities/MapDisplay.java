@@ -1,5 +1,15 @@
 package com.example.luxapp.Activities;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.luxapp.R;
 import com.example.luxapp.Classes.*;
 import android.app.ActivityOptions;
@@ -9,12 +19,16 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.RoundCap;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,13 +46,17 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback {
 
+
+    private int userID;
+    private int experimentID;
+    private double avg_lux;
     private HashMap<Integer, Sample> samples;
+    private TextView rank;
 
     // MAP
     private MapView mapView;
     private GoogleMap gmap;
 
-    private int userID;
 
     private static final String TAG = MapDisplay.class.getSimpleName();
 
@@ -51,7 +69,10 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
         setContentView(R.layout.activity_map_display);
         ButterKnife.bind(this);
 
+        experimentID = (Integer) getIntent().getExtras().get("experimentID");
         userID = (Integer) getIntent().getExtras().get("userID");
+        rank = findViewById(R.id.rank);
+        avg_lux = 0;
 
         // initializate map view
         Bundle mapViewBundle = null;
@@ -63,15 +84,18 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
 
+
     }
 
-    // SHOW ROUTE
+    // SHOW INFO
 
-    @OnClick(R.id.btn_show_route)
-    public void showMapRoute() {
+    @OnClick(R.id.btn_show_info)
+    public void showInfo() {
+        Toast.makeText(MapDisplay.this, "A obter informação...", Toast.LENGTH_SHORT).show();
 
+    // SHOW MAP
         // Samples from experiment
-        samples = (HashMap<Integer, Sample> ) getIntent().getExtras().get("Samples");
+        samples = (HashMap<Integer, Sample>) getIntent().getExtras().get("Samples");
 
         // ROUTE ON MAP
 
@@ -98,13 +122,137 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
         plo.jointType(JointType.BEVEL);
 
         gmap.addPolyline(plo);
+
+
+    // SHOW STATISTICS (LUX QUALITY + RANK)
+
+        // CALCULATE AVG_LUX
+
+        double al = 0;
+
+        for(Sample s : samples.values())
+            al+=s.getLuminosity();
+
+        avg_lux = al/(samples.size());
+
+        setExpLux();
+
+
+        // QUALITY
+        //getExpQuality;
+
+
+    }
+
+    void setExpLux(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.LUX_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // RANK
+                getExpRank();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof TimeoutError) {
+                    Toast.makeText(MapDisplay.this, "Timeout Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof NoConnectionError) {
+                    Toast.makeText(MapDisplay.this, "No Connection Error", Toast.LENGTH_SHORT).show();
+                    Log.v("Error",error.toString());
+                } else if (error instanceof AuthFailureError) {
+                    Toast.makeText(MapDisplay.this, "Authentication Failure Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof NetworkError) {
+                    Toast.makeText(MapDisplay.this, "Network Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ServerError) {
+                    Toast.makeText(MapDisplay.this, "Server Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ParseError) {
+                    Toast.makeText(MapDisplay.this, "JSON Parse Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Constants.KEY_EXP_ID, String.valueOf(experimentID));
+                params.put(Constants.KEY_LUX,String.valueOf(avg_lux));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("User-Agent", "LuxApp");
+                return headers;
+            }
+        };
+
+        MySingleton.getInstance(MapDisplay.this).addToRequestQueue(stringRequest);
     }
 
 
-    // SHOW LIGHT AREAS
+    /*void getExpQuality(){
+        if (avg_lux<=)
+            quality.setTextColor(Color.GREEN);
+        if (avg_lux>)
+            quality.setTextColor(Color.YELLOW);
+        else
+            quality.setTextColor(Color.RED);
+    }*/
 
-    @OnClick(R.id.btn_show_areas)
-    public void showLightAreas() { }
+    void getExpRank(){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.RANK_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(!response.contains("Falha na conexão...")){
+
+                   /* if (avg_lux<=)
+                        rank.setTextColor(Color.GREEN);
+                    if (avg_lux>)
+                        rank.setTextColor(Color.YELLOW);
+                    else
+                        rank.setTextColor(Color.RED);*/
+
+                    rank.setText(response);
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof TimeoutError) {
+                    Toast.makeText(MapDisplay.this, "Timeout Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof NoConnectionError) {
+                    Toast.makeText(MapDisplay.this, "No Connection Error", Toast.LENGTH_SHORT).show();
+                    Log.v("Error",error.toString());
+                } else if (error instanceof AuthFailureError) {
+                    Toast.makeText(MapDisplay.this, "Authentication Failure Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof NetworkError) {
+                    Toast.makeText(MapDisplay.this, "Network Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ServerError) {
+                    Toast.makeText(MapDisplay.this, "Server Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ParseError) {
+                    Toast.makeText(MapDisplay.this, "JSON Parse Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(Constants.KEY_EXP_ID, String.valueOf(experimentID));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("User-Agent", "LuxApp");
+                return headers;
+            }
+        };
+
+        MySingleton.getInstance(MapDisplay.this).addToRequestQueue(stringRequest);
+    }
 
     // CLOSE
 

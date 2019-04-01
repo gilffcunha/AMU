@@ -11,7 +11,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/lux_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity   android:name=".Activities.MenuActivity"
                     android:label="@string/app_name"
                     android:launchMode="singleTop">
@@ -41,7 +42,7 @@
         </activity>
         <activity
             android:name=".Activities.RegisterActivity"
-            android:label="@string/title_activity_register"
+            android:label="@string/app_name"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

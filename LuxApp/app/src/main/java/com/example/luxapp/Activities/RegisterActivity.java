@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.luxapp.Classes.*;
 import com.example.luxapp.R;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -67,11 +68,9 @@ public class RegisterActivity extends AppCompatActivity {
         Matcher m = p.matcher(INPUT);
 
         if(!m.find())
-        {
             Toast.makeText(RegisterActivity.this, "Email Inválido", Toast.LENGTH_SHORT).show();
-        }
         else{
-        // REGISTER
+            // REGISTER
             Toast.makeText(RegisterActivity.this, "A registar...", Toast.LENGTH_SHORT).show();
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.REGISTER_URL, new Response.Listener<String>() {
@@ -88,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(RegisterActivity.this, "Timeout Error", Toast.LENGTH_SHORT).show();
                     } else if (error instanceof NoConnectionError) {
                         Toast.makeText(RegisterActivity.this, "No Connection Error", Toast.LENGTH_SHORT).show();
+                        Log.v("Error",error.toString());
                     } else if (error instanceof AuthFailureError) {
                         Toast.makeText(RegisterActivity.this, "Authentication Failure Error", Toast.LENGTH_SHORT).show();
                     } else if (error instanceof NetworkError) {

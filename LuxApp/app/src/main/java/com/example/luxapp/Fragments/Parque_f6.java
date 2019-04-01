@@ -380,7 +380,6 @@ public class Parque_f6 extends Fragment implements SensorEventListener{
         mRequestingLocationUpdates = false;
         stopLocationUpdates(); // STOP
         sendData(); // SEND DATA
-        showMapRoute(); // SHOW MAP
     }
 
     public void stopLocationUpdates() {
@@ -407,6 +406,7 @@ public class Parque_f6 extends Fragment implements SensorEventListener{
                 Intent intent = new Intent(activity, MapDisplay.class);
                 intent.putExtra("Samples", samples);
                 intent.putExtra("userID", userID);
+                intent.putExtra("experimentID", experiment.getId());
                 startActivity(intent,
                         ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
             } catch(Exception e) {
@@ -512,10 +512,11 @@ public class Parque_f6 extends Fragment implements SensorEventListener{
             public void onResponse(String response) {
 
                 if(response.contains("Dados enviados com sucesso!")) {
-
+                    // Last sample
                     if (index == sample_N) {
                         pBar.setProgress(100);
                         Toast.makeText(activity, response, Toast.LENGTH_SHORT).show();
+                        showMapRoute(); // SHOW MAP
                     }else{
                         index++;
                         sample = samples.get(index);
