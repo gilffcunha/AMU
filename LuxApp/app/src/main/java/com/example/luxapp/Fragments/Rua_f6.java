@@ -243,7 +243,7 @@ public class Rua_f6 extends Fragment implements SensorEventListener{
         if (mCurrentLocation != null) {
 
             // location last updated time
-            txtUpdatedOn.setText("Last updated on: " + mLastUpdateTime);
+            txtUpdatedOn.setText("Última atualização: " + mLastUpdateTime);
 
 
             // SAMPLE

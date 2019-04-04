@@ -51,6 +51,7 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
     private int experimentID;
     private double avg_lux;
     private HashMap<Integer, Sample> samples;
+    private TextView quality;
     private TextView rank;
 
     // MAP
@@ -71,6 +72,7 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
 
         experimentID = (Integer) getIntent().getExtras().get("experimentID");
         userID = (Integer) getIntent().getExtras().get("userID");
+        quality = findViewById(R.id.quality);
         rank = findViewById(R.id.rank);
         avg_lux = 0;
 
@@ -137,9 +139,8 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
 
         setExpLux();
 
-
         // QUALITY
-        //getExpQuality;
+        getExpQuality();
 
 
     }
@@ -148,7 +149,7 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.LUX_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                // RANK
+                // GET RANK
                 getExpRank();
             }
         }, new Response.ErrorListener() {
@@ -190,14 +191,29 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
     }
 
 
-    /*void getExpQuality(){
-        if (avg_lux<=)
-            quality.setTextColor(Color.GREEN);
-        if (avg_lux>)
-            quality.setTextColor(Color.YELLOW);
-        else
+    void getExpQuality(){
+        if (avg_lux<= 10) {
+            quality.setText("Terrible");
             quality.setTextColor(Color.RED);
-    }*/
+        }
+        if (avg_lux>10 && avg_lux <=20) {
+            quality.setText("Bad");
+            quality.setTextColor(Color.RED);
+        }
+        if (avg_lux>20 && avg_lux <=30) {
+            quality.setText("Average");
+            quality.setTextColor(Color.YELLOW);
+        }
+        if (avg_lux>30 && avg_lux <50) {
+            quality.setText("Good");
+            quality.setTextColor(Color.GREEN);
+        }
+        if (avg_lux>=50) {
+            quality.setText("Excelent");
+            quality.setTextColor(Color.GREEN);
+        }
+
+    }
 
     void getExpRank(){
 
@@ -205,13 +221,13 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
             @Override
             public void onResponse(String response) {
                 if(!response.contains("Falha na conexão...")){
-
-                   /* if (avg_lux<=)
+                    int rank_temp = Integer.parseInt(response);
+                    if (rank_temp<=10)
                         rank.setTextColor(Color.GREEN);
-                    if (avg_lux>)
+                    if (rank_temp>10 && rank_temp<20)
                         rank.setTextColor(Color.YELLOW);
                     else
-                        rank.setTextColor(Color.RED);*/
+                        rank.setTextColor(Color.RED);
 
                     rank.setText(response);
 
