@@ -37,4 +37,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     // Volley
     implementation 'com.android.volley:volley:1.1.1'
+    // GIF
+    implementation 'com.github.Cutta:GifView:1.4'
 }

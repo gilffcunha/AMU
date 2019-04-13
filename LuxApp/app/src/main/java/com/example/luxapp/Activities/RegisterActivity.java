@@ -1,6 +1,5 @@
 package com.example.luxapp.Activities;
 
-
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +8,6 @@ import com.example.luxapp.Classes.*;
 import com.example.luxapp.R;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -38,10 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     // UI references.
-    private EditText user;
-    private AutoCompleteTextView email;
-    private EditText password;
-
+    private EditText email;
 
 
     @Override
@@ -50,12 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
         // Set up the register form.
-
-        user = findViewById(R.id.username);
-
         email = findViewById(R.id.email);
-
-        password = findViewById(R.id.password);
 
     }
 
@@ -67,68 +57,80 @@ public class RegisterActivity extends AppCompatActivity {
         Pattern p = Pattern.compile(REGEX);
         Matcher m = p.matcher(INPUT);
 
-        if(!m.find())
-            Toast.makeText(RegisterActivity.this, "Email Inválido", Toast.LENGTH_SHORT).show();
-        else{
-            // REGISTER
-            Toast.makeText(RegisterActivity.this, "A registar...", Toast.LENGTH_SHORT).show();
-
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.REGISTER_URL, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
-                    if (response.contains("Registado com sucesso!"))
-                        log();
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    if (error instanceof TimeoutError) {
-                        Toast.makeText(RegisterActivity.this, "Timeout Error", Toast.LENGTH_SHORT).show();
-                    } else if (error instanceof NoConnectionError) {
-                        Toast.makeText(RegisterActivity.this, "No Connection Error", Toast.LENGTH_SHORT).show();
-                        Log.v("Error",error.toString());
-                    } else if (error instanceof AuthFailureError) {
-                        Toast.makeText(RegisterActivity.this, "Authentication Failure Error", Toast.LENGTH_SHORT).show();
-                    } else if (error instanceof NetworkError) {
-                        Toast.makeText(RegisterActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
-                    } else if (error instanceof ServerError) {
-                        Toast.makeText(RegisterActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-                    } else if (error instanceof ParseError) {
-                        Toast.makeText(RegisterActivity.this, "JSON Parse Error", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put(Constants.KEY_NAME, user.getText().toString().trim());
-                    params.put(Constants.KEY_EMAIL, email.getText().toString().trim());
-                    params.put(Constants.KEY_PASSWORD, password.getText().toString().trim());
-                    return params;
-                }
-
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> headers = new HashMap<String, String>();
-                    headers.put("User-Agent", "LuxApp");
-                    return headers;
-                }
-            };
-
-            MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(stringRequest);
+        // No email
+        if(INPUT.isEmpty()) {
+            try {
+                Intent intent = new Intent(RegisterActivity.this, MenuActivity.class);
+                intent.putExtra("userID", 1);
+                startActivity(intent,
+                        ActivityOptions.makeSceneTransitionAnimation(RegisterActivity.this).toBundle());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-    }
+        else {
+            if (!m.find() && !INPUT.isEmpty())
+                Toast.makeText(RegisterActivity.this, "Email Inválido", Toast.LENGTH_SHORT).show();
+            else {
+                // REGISTER
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.REG_URL, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+                        if (!response.contains("Falha no registo...")) {
+                            // Insert new user
+                            try {
+                                Intent intent = new Intent(RegisterActivity.this, MenuActivity.class);
+                                // User already exists
+                                int id = 1;
+                                if (!response.contains("Registado com sucesso!"))
+                                    id = Integer.parseInt(response);
 
-    @OnClick(R.id.btnlog)
-    public void log(){
-        // Login Activity transition
-        try {
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            startActivity(intent,
-                    ActivityOptions.makeSceneTransitionAnimation(RegisterActivity.this).toBundle());
-        } catch(Exception e) {
-            e.printStackTrace();
+                                intent.putExtra("userID", id);
+                                startActivity(intent,
+                                        ActivityOptions.makeSceneTransitionAnimation(RegisterActivity.this).toBundle());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else
+                            Toast.makeText(RegisterActivity.this, "Falha no registo...", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error instanceof TimeoutError) {
+                            Toast.makeText(RegisterActivity.this, "Timeout Error", Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof NoConnectionError) {
+                            Toast.makeText(RegisterActivity.this, "No Connection Error", Toast.LENGTH_SHORT).show();
+                            Log.v("Error", error.toString());
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(RegisterActivity.this, "Authentication Failure Error", Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof NetworkError) {
+                            Toast.makeText(RegisterActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(RegisterActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(RegisterActivity.this, "JSON Parse Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put(Constants.KEY_EMAIL, email.getText().toString().trim());
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> headers = new HashMap<String, String>();
+                        headers.put("User-Agent", "LuxApp");
+                        return headers;
+                    }
+                };
+
+                MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(stringRequest);
+            }
         }
     }
 }
