@@ -9,10 +9,12 @@
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/map_view"
-        android:layout_width="375dp"
-        android:layout_height="282dp"
+        android:layout_width="374dp"
+        android:layout_height="235dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,18 +22,20 @@
         android:id="@+id/btn_menu"
         android:layout_width="305dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="52dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="16dp"
         android:text="Voltar para menu"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_show_info"
         android:layout_width="305dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="140dp"
         android:layout_marginBottom="276dp"
         android:text="Mostrar Informação"
@@ -45,39 +49,49 @@
         android:id="@+id/rank"
         android:layout_width="61dp"
         android:layout_height="35dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="140dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginBottom="53dp"
         android:text="..."
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btn_menu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rank_phrase" />
+        app:layout_constraintStart_toEndOf="@+id/rank_text"
+        app:layout_constraintTop_toBottomOf="@+id/rank_phrase"
+        app:layout_constraintVertical_bias="0.035" />
 
     <TextView
         android:id="@+id/rank_phrase"
-        android:layout_width="356dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="27dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="28dp"
+        android:layout_width="324dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         android:text="Tendo em conta o nível médio de iluminação da sua experiência, esta encontra-se no seguinte Rank, em relação a todas as experiências realizadas até agora:"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_show_info" />
+        app:layout_constraintTop_toBottomOf="@+id/quality" />
 
     <TextView
         android:id="@+id/rank_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="61dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="62dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="63dp"
         android:text="Rank:"
         android:textSize="24sp"
         android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/btn_menu"
+        app:layout_constraintEnd_toStartOf="@+id/rank"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rank_phrase" />
+        app:layout_constraintTop_toBottomOf="@+id/rank_phrase"
+        app:layout_constraintVertical_bias="0.035" />
 
     <TextView
         android:id="@+id/quality_text"
@@ -91,14 +105,18 @@
 
     <TextView
         android:id="@+id/quality"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="195dp"
-        android:layout_marginTop="11dp"
+        android:layout_width="107dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="198dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="192dp"
+        android:layout_marginBottom="20dp"
         android:text="..."
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/rank_phrase"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/quality_text" />
 

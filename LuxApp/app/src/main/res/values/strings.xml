@@ -39,4 +39,22 @@
     <string name="btn_iniciarPassadeira">Iniciar Experiência</string>
     <string name="btn_iniciarParque">Iniciar Experiência</string>
     <string name="btn_iniciarRua">Iniciar Experiência</string>
+    <string name="step3">passo3</string>
+    <string name="street_step1_desc">Antes de iniciar a experiência certifique-se de que se encontra na rua na qual pretende efetuar a experiência para obter medições.</string>
+    <string name="street_step5_desc">Caminhe ao longo da rua.</string>
+    <string name="street_step2_desc">Dirija-se a um ponto inicial e comece a experiência ao clicar no botão \"Iniciar Experiência\".</string>
+    <string name="bs_step1_desc">Antes de iniciar a experiência certifique-se de que se encontra na paragem de autocarro, na qual pretende efetuar a experiência para obter medições.</string>
+    <string name="bs_step2_desc">Dirija-se a um ponto inicial, cerca de 2 metros da paragem, e clique no botão \"Iniciar Experiência\".</string>
+    <string name="bs_step4_desc">Certifique-se que o sensor de luz (câmera frontal) se encontra desobstruída.</string>
+    <string name="bs_step5_desc">Caminhe ao longo do perimetro da paragem, efetuando uma volta a esta.</string>
+    <string name="park_step1_desc">Antes de iniciar a experiência certifique-se de que se encontra no parque no qual pretende efetuar a experiência para obter medições.</string>
+    <string name="park_step5_desc">Caminhe ao longo do percurso.</string>
+    <string name="park_step4_desc">Certifique-se que o sensor de luz (câmera frontal) se encontra desobstruída.</string>
+    <string name="park_step3_desc">Segure o telemóvel de modo a que a face frontal esteja voltada para cima, aproximadamente à altura do peito.</string>
+    <string name="park_step2_desc">Dirija-se a um ponto inicial do percurso e comece a experiência ao clicar no botão \"Iniciar Experiência\"</string>
+    <string name="zc_step1_desc">Antes de iniciar a experiência certifique-se de que se encontra cerca de 3 metros da passadeira, na qual pretende efetuar a experiência para obter medições.</string>
+    <string name="zc_step2_desc">Comece a experiência ao clicar no botão \"Iniciar Experiência\".</string>
+    <string name="zc_step3_desc">Segure o telemóvel de modo a que a face frontal esteja voltada para cima, aproximadamente à altura do peito.</string>
+    <string name="zc_step4_desc">Certifique-se que o sensor de luz (câmera frontal) se encontra desobstruída.</string>
+    <string name="zc_step5_desc">Caminhe ao longo da passadeira</string>
 </resources>
