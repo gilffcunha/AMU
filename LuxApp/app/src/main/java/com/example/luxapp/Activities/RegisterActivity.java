@@ -70,30 +70,25 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else {
             if (!m.find() && !INPUT.isEmpty())
-                Toast.makeText(RegisterActivity.this, "Email Inválido", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Formato de email inválido", Toast.LENGTH_SHORT).show();
             else {
                 // REGISTER
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.REG_URL, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
-                        if (!response.contains("Falha no registo...")) {
-                            // Insert new user
+                        if(!response.contains("Falha")) {
                             try {
+                                int id = Integer.parseInt(response);
                                 Intent intent = new Intent(RegisterActivity.this, MenuActivity.class);
-                                // User already exists
-                                int id = 1;
-                                if (!response.contains("Registado com sucesso!"))
-                                    id = Integer.parseInt(response);
-
                                 intent.putExtra("userID", id);
                                 startActivity(intent,
                                         ActivityOptions.makeSceneTransitionAnimation(RegisterActivity.this).toBundle());
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        } else
-                            Toast.makeText(RegisterActivity.this, "Falha no registo...", Toast.LENGTH_SHORT).show();
+                        }
+                        else Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+
                     }
                 }, new Response.ErrorListener() {
                     @Override

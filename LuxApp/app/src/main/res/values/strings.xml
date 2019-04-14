@@ -31,7 +31,7 @@
     <string name="instMenu12">E qual é o interesse em saber esta informação?</string>
     <string name="instMenu13">Esta app irá avaliar a qualidade da iluminação da sua cidade e os dados recolhidos irão, posteriormente, justificar a tomada de possíveis medidas para a sua segurança e comodidade!</string>
     <string name="instMenu3">Vamos começar!\nMas primeiro, o que quer descobrir?</string>
-    <string name="instMenu2">Para tal, é necessário realizar as experiências num ambiente noturno!\n</string>
+    <string name="instMenu2">Para tal, é necessário realizar as experiências num ambiente noturno\n</string>
     <string name="userimage">userImage</string>
     <string name="btn_parque">Experiência no Parque</string>
     <string name="btn_paragem">Experiência na Paragem</string>

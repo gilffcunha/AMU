@@ -22,12 +22,38 @@
 
 
     <TextView
+        android:id="@+id/instMenu1"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Vamos começar!"
+        android:textAlignment="center"
+        android:textColor="?attr/colorButtonNormal"
+        android:textSize="21sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/instMenu2"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="@string/instMenu2"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorButtonNormal"
+        android:textSize="17sp"
+        android:textStyle="italic" />
+
+
+    <TextView
         android:id="@+id/instMenu3"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:text="@string/instMenu3"
+        android:layout_marginTop="15dp"
+        android:text="Mas primeiro, o que quer descobrir?"
         android:textAlignment="center"
         android:textColor="?attr/colorButtonNormal"
         android:textSize="21sp"
@@ -38,7 +64,7 @@
         android:layout_width="316dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:text="@string/protocolo_de_rua" />
 
     <Button
