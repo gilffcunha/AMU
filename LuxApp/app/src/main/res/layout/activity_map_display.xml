@@ -22,44 +22,30 @@
         android:id="@+id/btn_menu"
         android:layout_width="305dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="53dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="53dp"
         android:text="Voltar para menu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btn_show_info"
-        android:layout_width="305dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="140dp"
-        android:layout_marginBottom="276dp"
-        android:text="Mostrar Informação"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map_view"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/rank" />
 
     <TextView
         android:id="@+id/rank"
         android:layout_width="61dp"
         android:layout_height="35dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="62dp"
-        android:layout_marginBottom="18dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="137dp"
+        android:layout_marginBottom="128dp"
         android:text="..."
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/rank_phrase"
+        app:layout_constraintBottom_toTopOf="@+id/btn_menu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/quality"
-        app:layout_constraintTop_toBottomOf="@+id/quality_text" />
+        app:layout_constraintStart_toEndOf="@+id/rank_text"
+        app:layout_constraintTop_toBottomOf="@+id/rank_phrase"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/rank_phrase"
@@ -90,17 +76,20 @@
         app:layout_constraintEnd_toStartOf="@+id/rank"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rank_phrase"
-        app:layout_constraintVertical_bias="0.035" />
+        app:layout_constraintVertical_bias="0.029" />
 
     <TextView
         android:id="@+id/quality_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="41dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="42dp"
         android:text="A qualidade do nível de iluminação da experiência é:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_show_info" />
+        app:layout_constraintTop_toBottomOf="@+id/map_view" />
 
     <TextView
         android:id="@+id/quality"
