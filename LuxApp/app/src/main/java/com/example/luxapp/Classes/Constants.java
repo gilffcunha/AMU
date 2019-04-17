@@ -5,6 +5,7 @@ public class Constants {
     public static final String DB_URL = "http://luxandroidapp.000webhostapp.com/connect/";
 
     public static final String REGISTER_URL = DB_URL + "register.php";
+    public static final String REG_URL = DB_URL + "reg.php";
     public static final String LOGIN_URL = DB_URL + "login.php";
     public static final String EXPERIMENT_URL = DB_URL + "experiment.php";
     public static final String SAMPLE_URL = DB_URL + "sample.php";

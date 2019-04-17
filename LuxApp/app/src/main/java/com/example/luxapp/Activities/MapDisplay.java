@@ -86,14 +86,10 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
 
-
     }
 
     // SHOW INFO
-
-    @OnClick(R.id.btn_show_info)
     public void showInfo() {
-        Toast.makeText(MapDisplay.this, "A obter informação...", Toast.LENGTH_SHORT).show();
 
     // SHOW MAP
         // Samples from experiment
@@ -113,7 +109,7 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
             plo.add(coord);
         }
 
-        gmap.setMinZoomPreference(16);
+        gmap.setMinZoomPreference(17);
 
         gmap.moveCamera(CameraUpdateFactory.newLatLng(coord));
 
@@ -345,13 +341,15 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-
         // MAP
         gmap = googleMap;
         gmap.setMinZoomPreference(7);
 
         LatLng portugal = new LatLng(40.0332629, -7.8896263);
         gmap.moveCamera(CameraUpdateFactory.newLatLng(portugal));
+
+        // SHOW INFO
+        showInfo();
 
     }
 }
