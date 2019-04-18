@@ -25,7 +25,7 @@ public class Passadeira_f1 extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.e3_p1, container, false);
+        return inflater.inflate(R.layout.zc_step1, container, false);
     }
 
 }

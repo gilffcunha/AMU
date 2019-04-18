@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/lux_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/LuxTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".Activities.Register_OLD"></activity>
         <activity
@@ -39,19 +39,19 @@
             android:launchMode="singleTop" />
         <activity
             android:name=".Activities.ParagemActivity"
-            android:label="Protocolo: Paragem de Autocarro"
+            android:label="Iluminação na Paragem"
             android:parentActivityName=".Activities.MenuActivity" />
         <activity
             android:name=".Activities.ParqueActivity"
-            android:label="Protocolo: Parque"
+            android:label="Iluminação no Parque"
             android:parentActivityName=".Activities.MenuActivity" />
         <activity
             android:name=".Activities.PassadeiraActivity"
-            android:label="Protocolo: Passadeira"
+            android:label="Iluminação na Passadeira"
             android:parentActivityName=".Activities.MenuActivity" />
         <activity
             android:name=".Activities.RuaActivity"
-            android:label="Protocolo: Rua"
+            android:label="Iluminação na Rua"
             android:parentActivityName=".Activities.MenuActivity" />
         <activity android:name=".Activities.MapDisplay" />
 

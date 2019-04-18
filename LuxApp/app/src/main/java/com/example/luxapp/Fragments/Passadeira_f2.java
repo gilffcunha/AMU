@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+
 public class Passadeira_f2 extends Fragment{
 
     public Passadeira_f2() {
@@ -23,8 +24,7 @@ public class Passadeira_f2 extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.e3_p2, container, false);
+        return inflater.inflate(R.layout.zc_step2, container, false);
     }
 
 }

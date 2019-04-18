@@ -15,7 +15,6 @@ import com.example.luxapp.Fragments.Parque_f2;
 import com.example.luxapp.Fragments.Parque_f3;
 import com.example.luxapp.Fragments.Parque_f4;
 import com.example.luxapp.Fragments.Parque_f5;
-import com.example.luxapp.Fragments.Parque_f6;
 import com.example.luxapp.R;
 
 import java.util.ArrayList;
@@ -48,7 +47,6 @@ public class ParqueActivity extends AppCompatActivity {
         adapter.addFrag(new Parque_f3(), "Passo 3");
         adapter.addFrag(new Parque_f4(), "Passo 4");
         adapter.addFrag(new Parque_f5(), "Passo 5");
-        adapter.addFrag(new Parque_f6(), "Passo 6");
         viewPager.setAdapter(adapter);
     }
 

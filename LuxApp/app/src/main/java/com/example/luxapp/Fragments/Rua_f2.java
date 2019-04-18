@@ -20,7 +20,7 @@ public class Rua_f2 extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.e4_p2, container, false);
+        return inflater.inflate(R.layout.street_step2, container, false);
     }
 
 }

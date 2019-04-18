@@ -189,23 +189,23 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
 
     void getExpQuality(){
         if (avg_lux<= 10) {
-            quality.setText("Terrible");
+            quality.setText("Terrível");
             quality.setTextColor(Color.RED);
         }
         if (avg_lux>10 && avg_lux <=20) {
-            quality.setText("Bad");
+            quality.setText("Má");
             quality.setTextColor(Color.RED);
         }
         if (avg_lux>20 && avg_lux <=30) {
-            quality.setText("Average");
+            quality.setText("Média");
             quality.setTextColor(Color.YELLOW);
         }
         if (avg_lux>30 && avg_lux <50) {
-            quality.setText("Good");
+            quality.setText("Boa");
             quality.setTextColor(Color.GREEN);
         }
         if (avg_lux>=50) {
-            quality.setText("Excelent");
+            quality.setText("Excelente");
             quality.setTextColor(Color.GREEN);
         }
 

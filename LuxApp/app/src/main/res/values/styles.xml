@@ -14,5 +14,13 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
+    <style name="LuxTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorDarkGrey</item>
+        <item name="colorPrimaryDark">@color/colorDark</item>
+        <item name="colorAccent">@color/colorWhite</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/colorLightGrey</item>
+    </style>
 
 </resources>

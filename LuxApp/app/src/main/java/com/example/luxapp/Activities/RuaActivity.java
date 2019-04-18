@@ -13,8 +13,6 @@ import com.example.luxapp.Fragments.Rua_f1;
 import com.example.luxapp.Fragments.Rua_f2;
 import com.example.luxapp.Fragments.Rua_f3;
 import com.example.luxapp.Fragments.Rua_f4;
-import com.example.luxapp.Fragments.Rua_f5;
-import com.example.luxapp.Fragments.Rua_f6;
 import com.example.luxapp.R;
 
 import java.util.ArrayList;
@@ -47,8 +45,6 @@ public class RuaActivity extends AppCompatActivity {
         adapter.addFrag(new Rua_f2(), "Passo 2");
         adapter.addFrag(new Rua_f3(), "Passo 3");
         adapter.addFrag(new Rua_f4(), "Passo 4");
-        adapter.addFrag(new Rua_f5(), "Passo 5");
-        adapter.addFrag(new Rua_f6(), "Passo 6");
         viewPager.setAdapter(adapter);
     }
 
