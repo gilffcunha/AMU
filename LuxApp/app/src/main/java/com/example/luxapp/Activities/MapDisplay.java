@@ -197,7 +197,7 @@ public class MapDisplay extends AppCompatActivity implements OnMapReadyCallback 
             quality.setTextColor(Color.RED);
         }
         if (avg_lux>20 && avg_lux <=30) {
-            quality.setText("Média");
+            quality.setText("Razoável");
             quality.setTextColor(Color.YELLOW);
         }
         if (avg_lux>30 && avg_lux <50) {

@@ -245,7 +245,7 @@ public class Parque_f5 extends Fragment implements SensorEventListener{
         if (mCurrentLocation != null) {
 
             // location last updated time
-            txtUpdatedOn.setText("Última atualização: " + mLastUpdateTime);
+            txtUpdatedOn.setText("Última amostra: " + mLastUpdateTime);
 
 
             // SAMPLE
