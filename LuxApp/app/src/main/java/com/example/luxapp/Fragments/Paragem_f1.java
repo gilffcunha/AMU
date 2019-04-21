@@ -19,8 +19,6 @@ public class Paragem_f1 extends Fragment{
     public Paragem_f1() {
     }
 
-    @BindView(R.id.btn_bs_step2)
-    Button btn_bs_step2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

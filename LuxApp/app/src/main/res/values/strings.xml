@@ -69,6 +69,7 @@
     <string name="quality_text">A qualidade de iluminação do local em que se encontra, em termos de visibilidade, é:</string>
     <string name="dotdotdot">…</string>
     <string name="experiment_notes">Nota: É necessário ativar a localização e a conexão à Internet, no dispositivo.\n\nA aplicação terá de permanecer em primeiro plano durante a sua execução.</string>
+    <string name="swipe_icon">swipe icon</string>
 
 
 </resources>

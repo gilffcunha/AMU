@@ -19,19 +19,21 @@
         android:text="@string/bs_step1_text"
         android:textAlignment="center"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_bs_step2"
+        app:layout_constraintBottom_toTopOf="@+id/swipe1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_bs_step2"
-        android:layout_width="40dp"
-        android:layout_height="43dp"
+
+    <ImageView
+        android:id="@+id/swipe1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="60dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="65dp"
-        android:background="@drawable/icon_forward_white"
+        app:srcCompat="@drawable/ic_swipe_left"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:contentDescription="@string/swipe_icon"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

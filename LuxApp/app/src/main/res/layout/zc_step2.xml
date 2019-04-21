@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/passo3"
-        android:layout_width="wrap_content"
-        android:layout_height="332dp"
+        android:layout_width="403dp"
+        android:layout_height="289dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="8dp"
@@ -41,5 +41,17 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passo3" />
+
+    <ImageView
+        android:id="@+id/swipe2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="8dp"
+        app:srcCompat="@drawable/ic_swipe"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="@string/swipe_icon"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 
 </android.support.constraint.ConstraintLayout>
