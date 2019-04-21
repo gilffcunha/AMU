@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.example.luxapp.Fragments.Paragem_f0;
 import com.example.luxapp.Fragments.Paragem_f1;
 import com.example.luxapp.Fragments.Paragem_f2;
 import com.example.luxapp.Fragments.Paragem_f3;
@@ -40,6 +41,7 @@ public class ParagemActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFrag(new Paragem_f0(), "A Experiência");
         adapter.addFrag(new Paragem_f1(), "Passo 1");
         adapter.addFrag(new Paragem_f2(), "Passo 2");
         adapter.addFrag(new Paragem_f3(), "Passo 3");

@@ -9,7 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-
+import com.example.luxapp.Fragments.Parque_f0;
 import com.example.luxapp.Fragments.Parque_f1;
 import com.example.luxapp.Fragments.Parque_f2;
 import com.example.luxapp.Fragments.Parque_f3;
@@ -42,6 +42,7 @@ public class ParqueActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFrag(new Parque_f0(), "A experiência");
         adapter.addFrag(new Parque_f1(), "Passo 1");
         adapter.addFrag(new Parque_f2(), "Passo 2");
         adapter.addFrag(new Parque_f3(), "Passo 3");

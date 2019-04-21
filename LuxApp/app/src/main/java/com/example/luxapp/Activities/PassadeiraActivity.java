@@ -13,6 +13,7 @@ import com.example.luxapp.Fragments.Passadeira_f1;
 import com.example.luxapp.Fragments.Passadeira_f2;
 import com.example.luxapp.Fragments.Passadeira_f3;
 import com.example.luxapp.Fragments.Passadeira_f4;
+import com.example.luxapp.Fragments.Passadeira_f0;
 import com.example.luxapp.R;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class PassadeiraActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFrag(new Passadeira_f0(), "A Experiência");
         adapter.addFrag(new Passadeira_f1(), "Passo 1");
         adapter.addFrag(new Passadeira_f2(), "Passo 2");
         adapter.addFrag(new Passadeira_f3(), "Passo 3");
