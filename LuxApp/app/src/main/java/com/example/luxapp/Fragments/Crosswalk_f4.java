@@ -116,8 +116,8 @@ public class Crosswalk_f4 extends Fragment implements SensorEventListener{
     // location last updated time
     private String mLastUpdateTime;
 
-    // location updates interval - 3.5sec
-    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 3500;
+    // location updates interval - 1sec
+    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 1000;
 
     // fastest updates interval - 1 sec
     // location updates will be received if another app is requesting the locations
