@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        custom:gif="@drawable/walking2" />
+        app:gif="@drawable/walking" />
 
     <TextView
         android:id="@+id/editText"

@@ -25,7 +25,7 @@
 
     <TextView
         android:id="@+id/editText"
-        android:layout_width="340dp"
+        android:layout_width="355dp"
         android:layout_height="123dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
@@ -33,7 +33,7 @@
         android:layout_marginBottom="68dp"
         android:ems="10"
         android:inputType="textMultiLine"
-        android:text="@string/bs_step3_text"
+        android:text="@string/zc_step2_text"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,11 +46,12 @@
         android:id="@+id/swipe2"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="60dp"
-        android:contentDescription="@string/swipe_icon"
+        android:layout_marginEnd="8dp"
+        app:srcCompat="@drawable/ic_swipe"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_swipe" />
+        android:contentDescription="@string/swipe_icon"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 
 </android.support.constraint.ConstraintLayout>

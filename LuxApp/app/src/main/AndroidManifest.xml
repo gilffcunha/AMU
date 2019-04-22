@@ -42,22 +42,22 @@
             android:launchMode="singleTop" />
         <activity
             android:screenOrientation="portrait"
-            android:name=".Activities.ParagemActivity"
+            android:name=".Activities.BusStopActivity"
             android:label="Iluminação na Paragem"
             android:parentActivityName=".Activities.MenuActivity" />
         <activity
             android:screenOrientation="portrait"
-            android:name=".Activities.ParqueActivity"
+            android:name=".Activities.ParkActivity"
             android:label="Iluminação no Parque"
             android:parentActivityName=".Activities.MenuActivity" />
         <activity
             android:screenOrientation="portrait"
-            android:name=".Activities.PassadeiraActivity"
+            android:name=".Activities.CrosswalkActivity"
             android:label="Iluminação na Passadeira"
             android:parentActivityName=".Activities.MenuActivity" />
         <activity
             android:screenOrientation="portrait"
-            android:name=".Activities.RuaActivity"
+            android:name=".Activities.StreetActivity"
             android:label="Iluminação na Rua"
             android:parentActivityName=".Activities.MenuActivity" />
         <activity android:name=".Activities.MapDisplay" />

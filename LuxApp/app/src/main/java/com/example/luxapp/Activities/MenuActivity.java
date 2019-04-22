@@ -4,14 +4,9 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.luxapp.R;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -30,7 +25,7 @@ public class MenuActivity extends AppCompatActivity {
     @OnClick(R.id.proto_street)
     public void street_protocol(){
         try {
-            Intent intent = new Intent(MenuActivity.this, RuaActivity.class);
+            Intent intent = new Intent(MenuActivity.this, StreetActivity.class);
             intent.putExtra("userID", userID);
             startActivity(intent,
                     ActivityOptions.makeSceneTransitionAnimation(MenuActivity.this).toBundle());
@@ -42,7 +37,7 @@ public class MenuActivity extends AppCompatActivity {
     @OnClick(R.id.proto_crossroad)
     public void crossroad_protocol(){
         try {
-            Intent intent = new Intent(MenuActivity.this, PassadeiraActivity.class);
+            Intent intent = new Intent(MenuActivity.this, CrosswalkActivity.class);
             intent.putExtra("userID", userID);
             startActivity(intent,
                     ActivityOptions.makeSceneTransitionAnimation(MenuActivity.this).toBundle());
@@ -54,7 +49,7 @@ public class MenuActivity extends AppCompatActivity {
     @OnClick(R.id.proto_park)
     public void park_protocol(){
         try {
-            Intent intent = new Intent(MenuActivity.this, ParqueActivity.class);
+            Intent intent = new Intent(MenuActivity.this, ParkActivity.class);
             intent.putExtra("userID", userID);
             startActivity(intent,
                     ActivityOptions.makeSceneTransitionAnimation(MenuActivity.this).toBundle());
@@ -66,7 +61,7 @@ public class MenuActivity extends AppCompatActivity {
     @OnClick(R.id.proto_bus)
     public void bus_protocol(){
         try {
-            Intent intent = new Intent(MenuActivity.this, ParagemActivity.class);
+            Intent intent = new Intent(MenuActivity.this, BusStopActivity.class);
             intent.putExtra("userID", userID);
             startActivity(intent,
                     ActivityOptions.makeSceneTransitionAnimation(MenuActivity.this).toBundle());

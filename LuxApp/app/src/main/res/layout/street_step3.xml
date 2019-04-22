@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:srcCompat="@drawable/r_passo_5" />
+        app:srcCompat="@drawable/street_step5" />
 
     <TextView
         android:id="@+id/editText"

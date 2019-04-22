@@ -16,7 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="10dp"
         android:contentDescription="@string/step3"
-        android:src="@drawable/passo_3_new"
+        android:src="@drawable/phone_placement"
         app:layout_constraintBottom_toTopOf="@+id/editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

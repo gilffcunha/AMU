@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/r_passo_1" />
+        app:srcCompat="@drawable/street_step1" />
 
     <TextView
         android:id="@+id/editText"
