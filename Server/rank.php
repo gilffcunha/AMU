@@ -10,7 +10,7 @@
 				$experimentID = $_POST['experimentID'];
 
 				$sql = "SET @row_number = 0;";
-				$sql2 = "SELECT num FROM (SELECT (@row_number:=@row_number + 1) AS num, Avg_Lux, ID FROM Experiment ORDER BY Avg_Lux) as T WHERE ID = '$experimentID';";
+				$sql2 = "SELECT num FROM (SELECT (@row_number:=@row_number + 1) AS num, Avg_Lux, ID FROM Experiment ORDER BY Avg_Lux DESC) as T WHERE ID = '$experimentID';";
 
 				if(mysqli_query($con,$sql)){
 					$rank = mysqli_query($con,$sql2);
