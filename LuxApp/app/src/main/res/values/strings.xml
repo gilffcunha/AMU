@@ -51,10 +51,10 @@
     <string name="bs_step2_text">Coloque-se a cerca de 2 metros da paragem, no local onde será iniciada a medição.</string>
     <string name="bs_step3_text">Durante a medição, deve segurar o telemóvel de modo a que a face frontal esteja voltada para cima, aproximadamente à altura do peito. \n\n Mantenha o sensor de luz desobstruído.</string>
     <string name="bs_step4_text">A medição inicia no momento em que carregar no botão \"Iniciar Experiência\" na página seguinte.</string>
-    <string name="bs_step4_text2">Após carregar, deve caminhar ao longo do perímetro da paragem, efetuando uma volta a esta.</string>
+    <string name="bs_step4_text2">Após carregar, deve caminhar ao longo do perímetro da paragem, efetuando uma volta a esta, momento este em que deve concluir a experiência.</string>
     <string name="bs_step4_text3">Está preparado?</string>
     <string name="park_step1_text">Antes de iniciar a experiência, deve certificar-se de que se encontra no parque no qual pretende efetuar a medição.</string>
-    <string name="park_step2_text">Dirija-se a um ponto inicial do percurso. Esse será o local onde a iluminação será testada.</string>
+    <string name="park_step2_text">Dirija-se a um ponto inicial do percurso. Esse será o local onde a recolha de dados será iniciada.</string>
     <string name="park_step3_text">Durante a medição, deve segurar o telemóvel de modo a que a face frontal esteja voltada para cima, aproximadamente à altura do peito. \n\n Mantenha o sensor de luz desobstruído.</string>
     <string name="park_step4_text">A medição inicia no momento em que carregar no botão \"Iniciar Experiência\" na página seguinte.</string>
     <string name="park_step4_text2">Após carregar, deve caminhar ao longo do percurso, concluindo a experiência quando este acabar.</string>
@@ -62,7 +62,7 @@
     <string name="zc_step1_text">Antes de iniciar a experiência, certifique-se de que se encontra a cerca de 3 metros da passadeira na qual pretende efetuar a medição.</string>
     <string name="zc_step2_text">Durante a medição, deve segurar o telemóvel de modo a que a face frontal esteja voltada para cima, aproximadamente à altura do peito. \n\n Mantenha o sensor de luz desobstruído.</string>
     <string name="zc_step3_text">A medição inicia no momento em que carregar no botão \"Iniciar Experiência\" na página seguinte.</string>
-    <string name="zc_step3_text2">Após carregar, deve atravessar a passadeira, concluindo a experiência a 3 metros do final da mesma.</string>
+    <string name="zc_step3_text2">Após carregar, deve atravessar a passadeira, concluindo a experiência a cerca de 3 metros do final da mesma.</string>
     <string name="zc_step3_text3">Está preparado?</string>
     <string name="rank_text">Tendo em conta o nível médio de iluminação da sua experiência, esta encontra-se no seguinte Rank, em relação a todas as experiências realizadas até agora:</string>
     <string name="rank">Rank:</string>
