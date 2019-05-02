@@ -347,7 +347,7 @@ public class Park_f5 extends Fragment implements SensorEventListener{
         btnStopUpdates.setVisibility(View.VISIBLE);
 
         // IF IT'S NIGHT
-        //if( (timeOfDay >= 21 && timeOfDay <= 24) || (timeOfDay >= 0 && timeOfDay <= 5)) {
+        if( (timeOfDay >= 21 && timeOfDay <= 24) || (timeOfDay >= 0 && timeOfDay <= 5)) {
             // Requesting ACCESS_FINE_LOCATION using Dexter library
             Dexter.withActivity(activity)
                     .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -372,9 +372,9 @@ public class Park_f5 extends Fragment implements SensorEventListener{
                             token.continuePermissionRequest();
                         }
                     }).check();
-       /* }else{ // IF ITS DAY
+        }else{ // IF ITS DAY
             Toast.makeText(activity, "A experiência apenas pode ser realizada à noite (21h às 5h)", Toast.LENGTH_LONG).show();
-        }*/
+        }
     }
 
     // STOP EXPERIMENT
