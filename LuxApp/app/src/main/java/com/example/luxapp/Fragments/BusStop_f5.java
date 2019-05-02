@@ -144,9 +144,6 @@ public class BusStop_f5 extends Fragment implements SensorEventListener{
 
     // TIME COUNTER
     private static final long START_TIME_IN_MILLIS = 30000;
-    private TextView mTextViewCountDown;
-    private CountDownTimer mCountDownTimer;
-    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -154,7 +151,8 @@ public class BusStop_f5 extends Fragment implements SensorEventListener{
         activity = getActivity();
         userID = (Integer) activity.getIntent().getExtras().get("userID");
 
-        mTextViewCountDown = activity.findViewById(R.id.text_view_countdown);
+
+
     }
 
     @Override
@@ -354,15 +352,6 @@ public class BusStop_f5 extends Fragment implements SensorEventListener{
 
         btnStartUpdates.setVisibility(View.INVISIBLE);
         btnStopUpdates.setVisibility(View.VISIBLE);
-
-        Calendar c = Calendar.getInstance();
-        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-
-        // IF IT'S NIGHT
-        if( (timeOfDay >= 21 && timeOfDay <= 24) || (timeOfDay >= 0 && timeOfDay <= 5)) {
-
-            startTimer();
-
             // Requesting ACCESS_FINE_LOCATION using Dexter library
             Dexter.withActivity(activity)
                     .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -387,38 +376,8 @@ public class BusStop_f5 extends Fragment implements SensorEventListener{
                             token.continuePermissionRequest();
                         }
                     }).check();
-        }else{ // IF ITS DAY
-            Toast.makeText(activity, "A experiência apenas pode ser realizada à noite (21h às 5h)", Toast.LENGTH_LONG).show();
-        }
     }
 
-
-    // START TIMER
-    private void startTimer() {
-        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                mTimeLeftInMillis = millisUntilFinished;
-                updateCountDownText();
-            }
-
-            @Override
-            public void onFinish() {
-                mCountDownTimer.cancel();
-                stopLocationButtonClick();
-            }
-        }.start();
-    }
-
-    // UPDATE TIMER
-    private void updateCountDownText() {
-        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
-        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
-
-        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-
-        mTextViewCountDown.setText(timeLeftFormatted);
-    }
 
 
     // STOP EXPERIMENT
